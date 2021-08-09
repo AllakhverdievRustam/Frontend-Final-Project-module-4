@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto:ital,wght@0,700;1,300&display=swap');
+
+.body {
+ font-family: 'Roboto', sans-serif;
+ margin: auto;
+}
+
+.main-block {
+  background-color: #c5e9ffc7;
+  height: 851px;
+}
+
+.block-img {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+
+  svg {
+    margin-top: 135px;
+  }
+}
+
+.input-form {
+
+  form {
+    background-color: white;
+    height:453px;
+    width: 400px;
+  }
+}
