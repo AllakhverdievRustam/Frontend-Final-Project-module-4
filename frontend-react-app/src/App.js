@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Switch,
   Route,
-  useHistory
+  Redirect
 } from 'react-router-dom';
 import BodyRegist from './pages/BodyRegist';
 import BodyAuth from './pages/BodyAuth';
@@ -10,17 +10,14 @@ import MainPage from './pages/MainPage';
 
 import './App.scss';
 
-function App() {
-  let history = useHistory();
-  history.push('/Registration');
-
+const App = () => {
   return (
     <div>
-
       <Switch>
-        <Route path={'/Authorization'} component={BodyAuth} />
-        <Route path={'/Registration'} component={BodyRegist} />
-        <Route path={'/MainPage'} component={MainPage} />
+        <Route path='/Authorization' component={BodyAuth} />
+        <Route path='/Registration' component={BodyRegist} />
+        <Route path='/MainPage' component={MainPage} />
+        <Redirect from='/' to='/Registration' />
       </Switch>
     </div>
   );
