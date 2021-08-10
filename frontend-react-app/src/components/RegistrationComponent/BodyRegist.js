@@ -1,22 +1,15 @@
 import React, { useState } from 'react';
-import {
-  Switch,
-  Route,
-  Link,
-  useHistory
-} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import Header from '../components/Header';
+import Header from '../HeaderComponent/Header';
+import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyRegist.scss';
-import Svg from '../MainSvg';
-import BodyAuth from './BodyAuth';
 
 const BodyRegist = () => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordRepeatInput, setPasswordRepeatInput] = useState('');
   const [errorInput, setErrorInput] = useState('');
-  const [user, setUser] = useState({});
 
   const history = useHistory();
 
@@ -30,7 +23,7 @@ const BodyRegist = () => {
 
     let flagNum = false;
     for (let i = 0; i < passwordInput.length; i++) {
-      if (Number.isInteger(Number(passwordInput[i]))) flagNum = true;
+      if (/[0-9]/.test(passwordInput[i])) flagNum = true;
     }
     if (flagNum === false) return setErrorInput('Добавьте хотя бы одно число в пароль!');
 
@@ -41,16 +34,11 @@ const BodyRegist = () => {
       password: passwordRepeatInput
     }).then(res => {
       setErrorInput('');
-      setUser(res.data);
-
-      // Переход на главную страницу
+      localStorage.setItem('user', JSON.stringify(res.data));
+      history.push('/MainPage');
     }).catch ((err) => {
-      if (err.response.status === 421) return setErrorInput('Логин занят!');
+      if (err.response.status === 421) return setErrorInput('Пользователь уже существует в системе!');
     });
-  }
-
-  const goToMainPage = (user) => {
-    history.push('/MainPage');
   }
 
   return (
@@ -71,7 +59,6 @@ const BodyRegist = () => {
               onChange={(e) => setLoginInput(e.target.value)}
               type="text"
               placeholder="login"
-              id="login-id"
               name="login"
               className="form-control mb-3"
             />
@@ -81,7 +68,6 @@ const BodyRegist = () => {
               onChange={(e) => setPasswordInput(e.target.value)}
               type="text"
               placeholder="Password"
-              id="password-id"
               name="password"
               className="form-control mb-3"
             />
@@ -91,7 +77,6 @@ const BodyRegist = () => {
               onChange={(e) => setPasswordRepeatInput(e.target.value)}
               type="text"
               placeholder="Password"
-              id="password-repeat-id"
               name="password-repeat"
               className="form-control mb-4"
             />
@@ -110,10 +95,6 @@ const BodyRegist = () => {
           </Link>
         </div>
       </div>
-
-      <Switch>
-        <Route path='/Authorization' component={BodyAuth} />
-      </Switch>
     </>
   );
 }

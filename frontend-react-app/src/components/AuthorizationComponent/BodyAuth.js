@@ -1,21 +1,14 @@
 import React, { useState } from 'react';
-import {
-  Switch,
-  Route,
-  Link,
-  useHistory
-} from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
-import Header from '../components/Header';
+import Header from '../HeaderComponent/Header';
+import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyAuth.scss';
-import Svg from '../MainSvg';
-import BodyRegist from './BodyRegist';
 
 const BodyAuth = () => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [errorInput, setErrorInput] = useState('');
-  const [user, setUser] = useState({});
 
   const history = useHistory();
 
@@ -29,7 +22,7 @@ const BodyAuth = () => {
 
     let flagNum = false;
     for (let i = 0; i < passwordInput.length; i++) {
-      if (Number.isInteger(Number(passwordInput[i]))) flagNum = true;
+      if (/[0-9]/.test(passwordInput[i])) flagNum = true;
     }
     if (flagNum === false) return setErrorInput('Добавьте хотя бы одно число в пароль!');
 
@@ -38,14 +31,16 @@ const BodyAuth = () => {
       password: passwordInput
     }).then(res => {
       setErrorInput('');
-      setUser(res.data);
-
-      // Переход на главную страницу
+      localStorage.setItem('user', JSON.stringify(res.data));
+      history.push('/MainPage');
     }).catch ((err) => {
-      if (err.response.status === 420) {
-        setErrorInput('Пользователь не найден!');
-      } else if (err.response.status === 421) {
-        setErrorInput('Не верный пароль!');
+      switch(err.response.status) {
+        case 420:
+          return setErrorInput('Пользователь не найден!');
+        case 421:
+          return setErrorInput('Не верный пароль!');
+        default:
+          break;
       }
     });
   }
@@ -68,7 +63,6 @@ const BodyAuth = () => {
               onChange={(e) => setLoginInput(e.target.value)}
               type="text"
               placeholder="login"
-              id="login-id"
               name="login-name"
               className="form-control mb-3"
             />
@@ -78,7 +72,6 @@ const BodyAuth = () => {
               onChange={(e) => setPasswordInput(e.target.value)}
               type="text"
               placeholder="Password"
-              id="password-id"
               name="password-name"
               className="form-control mb-5"
             />
@@ -97,10 +90,6 @@ const BodyAuth = () => {
           </Link>
         </div>
       </div>
-
-      <Switch>
-        <Route path='/Registration' component={BodyRegist} />
-      </Switch>
     </>
   );
 }
