@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Roboto:ital,wght@0,700;1,300&display=swap');
+
+.body {
+  font-family: 'Roboto', sans-serif;
+  margin: auto;
+}
+
+.main-block-login {
+  background-color: #c5e9ffc7;
+  height: 85vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-right: 40px;
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    width: 80%;
+  }
+  
+  .button-login {
+    margin-left: auto;
+  }
+  
+  span {
+    color: red;
+    text-align: right;
+    font-weight: 300;
+    font-size: 15px;
+    margin-top: 20px;
+  }
+}
+
+.log-block {
+  background-color: white;
+  height: 53vh;
+  width: 400px;
+  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+
+  h1 {
+    font-size: 36px;
+    font-weight: 300;
+    font-style: normal;
+    line-height: 42px;
+    color: black;
+  }
+
+  .trans-auth {
+    text-decoration: none;
+    color: black;
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 21px;
+    margin-left: auto;
+    margin-right: 40px;
+    cursor: pointer;
+  }
+
+  .trans-auth:focus {
+    color: green;
+  }
+
+  .trans-auth:active {
+    color: green;
+  }
+
+  .trans-auth:hover {
+    color: green;
+  }
+}

@@ -1,21 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
   Switch,
   Route,
-  useHistory,
-  Link,
   Redirect
 } from 'react-router-dom';
-import Header from './Header';
-import BodyAuth from './BodyAuth';
-
+import BodyRegist from './components/RegistrationComponent/BodyRegist';
+import BodyAuth from './components/AuthorizationComponent/BodyAuth';
+import MainPage from './components/MainComponent/MainPage';
 import './App.scss';
 
-function App() {
+const App = () => {
+  const userData = JSON.parse(localStorage.getItem('user'));
+  
   return (
     <div>
-      <Header />
-      <BodyAuth />
+      <Switch>
+        <Route path='/Authorization' component={BodyAuth} />
+        <Route path='/Registration' component={BodyRegist} />
+        <Route path='/MainPage'>
+          <MainPage user={userData} />
+        </Route>
+        <Redirect from='/' to='/Registration' />
+      </Switch>
     </div>
   );
 }
