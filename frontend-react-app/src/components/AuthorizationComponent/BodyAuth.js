@@ -16,33 +16,27 @@ const BodyAuth = () => {
     if (loginInput.length < 6) return setErrorInput('Введите более 6 символов в поле логина!');
     if (passwordInput.length < 6) return setErrorInput('Введите более 6 символов в поле пароля!');
 
-    for (let i = 0; i < passwordInput.length; i++) {
-      if (/[а-яА-Я]/.test(passwordInput[i])) return setErrorInput('Используйте латинские буквы в пароле!');
+    if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(passwordInput)) {
+      axios.post('http://localhost:8000/authorizationUser', {
+        login: loginInput,
+        password: passwordInput
+      }).then(res => {
+        setErrorInput('');
+        localStorage.setItem('user', JSON.stringify(res.data));
+        history.push('/MainPage');
+      }).catch((err) => {
+        switch (err.response.status) {
+          case 420:
+            return setErrorInput('Пользователь не найден!');
+          case 421:
+            return setErrorInput('Не верный пароль!');
+          default:
+            break;
+        }
+      });
+    } else {
+      return setErrorInput('Используйте латинские буквы и хотя бы одно число в пароле!');
     }
-
-    let flagNum = false;
-    for (let i = 0; i < passwordInput.length; i++) {
-      if (/[0-9]/.test(passwordInput[i])) flagNum = true;
-    }
-    if (flagNum === false) return setErrorInput('Добавьте хотя бы одно число в пароль!');
-
-    axios.post('http://localhost:8000/authorizationUser', {
-      login: loginInput,
-      password: passwordInput
-    }).then(res => {
-      setErrorInput('');
-      localStorage.setItem('user', JSON.stringify(res.data));
-      history.push('/MainPage');
-    }).catch ((err) => {
-      switch(err.response.status) {
-        case 420:
-          return setErrorInput('Пользователь не найден!');
-        case 421:
-          return setErrorInput('Не верный пароль!');
-        default:
-          break;
-      }
-    });
   }
 
   return (

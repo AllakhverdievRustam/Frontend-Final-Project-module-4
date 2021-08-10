@@ -17,28 +17,22 @@ const BodyRegist = () => {
     if (loginInput.length < 6) return setErrorInput('Введите более 6 символов в поле логина!');
     if (passwordInput.length < 6) return setErrorInput('Введите более 6 символов в поле пароля!');
 
-    for (let i = 0; i < passwordInput.length; i++) {
-      if (/[а-яА-Я]/.test(passwordInput[i])) return setErrorInput('Используйте латинские буквы в пароле!');
+    if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(passwordInput)) {
+      if (passwordInput !== passwordRepeatInput) return setErrorInput('Пароли не совпадают!');
+
+      axios.post('http://localhost:8000/registrationUser', {
+        login: loginInput,
+        password: passwordRepeatInput
+      }).then(res => {
+        setErrorInput('');
+        localStorage.setItem('user', JSON.stringify(res.data));
+        history.push('/MainPage');
+      }).catch((err) => {
+        if (err.response.status === 421) return setErrorInput('Пользователь уже существует в системе!');
+      });
+    } else {
+      return setErrorInput('Используйте латинские буквы и хотя бы одно число в пароле!');
     }
-
-    let flagNum = false;
-    for (let i = 0; i < passwordInput.length; i++) {
-      if (/[0-9]/.test(passwordInput[i])) flagNum = true;
-    }
-    if (flagNum === false) return setErrorInput('Добавьте хотя бы одно число в пароль!');
-
-    if (passwordInput !== passwordRepeatInput) return setErrorInput('Пароли не совпадают!');
-
-    axios.post('http://localhost:8000/registrationUser', {
-      login: loginInput,
-      password: passwordRepeatInput
-    }).then(res => {
-      setErrorInput('');
-      localStorage.setItem('user', JSON.stringify(res.data));
-      history.push('/MainPage');
-    }).catch ((err) => {
-      if (err.response.status === 421) return setErrorInput('Пользователь уже существует в системе!');
-    });
   }
 
   return (
