@@ -41,7 +41,7 @@ const BodyAuth = () => {
 
   return (
     <>
-      <Header name='Войти в систему' />
+      <Header name='Войти в систему' flag={false} />
       <div className="main-block-auth w-100">
 
         <Svg />
