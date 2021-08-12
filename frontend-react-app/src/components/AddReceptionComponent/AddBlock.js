@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddBlock.scss';
 
-const AddBlock = ({setReceptions}) => {
+const AddBlock = ({ setReceptions }) => {
   const [name, setName] = useState('');
   const [doctor, setDoctor] = useState('');
   const [date, setDate] = useState('');
   const [complaint, setComplaint] = useState('');
+  const doctorArray = ['', 'Doctor 1', 'Doctor 2', 'Doctor 3', 'Doctor 4', 'Doctor 5'];
 
   let flagButton = false;
 
@@ -42,7 +43,7 @@ const AddBlock = ({setReceptions}) => {
           type="text"
           name="user-name"
           className="form-control w-100"
-          value = {name}
+          value={name}
         />
       </div>
 
@@ -53,14 +54,13 @@ const AddBlock = ({setReceptions}) => {
           className="form-select"
           name="doctor-name"
           id="inputGroupSelect01"
-          value = {doctor}
+          value={doctor}
         >
-          <option selected></option>
-          <option value="Doctor 1">Doctor 1</option>
-          <option value="Doctor 2">Doctor 2</option>
-          <option value="Doctor 3">Doctor 3</option>
-          <option value="Doctor 4">Doctor 4</option>
-          <option value="Doctor 5">Doctor 5</option>
+          {
+            doctorArray.map((element, index) => (
+              <option key={`key-${index}`} value={element}>{element}</option>
+            ))
+          }
         </select>
       </div>
 
@@ -71,7 +71,7 @@ const AddBlock = ({setReceptions}) => {
           type="date"
           name="date-name"
           className="form-control"
-          value = {date}
+          value={date}
         />
       </div>
 
@@ -82,25 +82,22 @@ const AddBlock = ({setReceptions}) => {
           type="text"
           name="complaint-name"
           className="form-control w-100"
-          value = {complaint}
+          value={complaint}
         />
       </div>
 
       {
         (name && doctor && date && complaint)
-          ? flagButton = true
-          : flagButton = false
+          ? flagButton = false
+          : flagButton = true
       }
-
-      {
-        flagButton
-          ? <button onClick={() => addReception()} type="button" className="btn btn-outline-dark mt-4">
-            Добавить
-          </button>
-          : <button type="button" className="btn btn-outline-dark mt-4" disabled>
-            Добавить
-          </button>
-      }
+      <button
+        onClick={() => addReception()}
+        type="button" className="btn btn-outline-dark mt-4"
+        disabled={flagButton}
+      >
+        Добавить
+      </button>
     </div >
   );
 }

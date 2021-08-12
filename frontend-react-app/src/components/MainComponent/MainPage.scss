@@ -23,11 +23,6 @@
     margin: 0px;
   }
 
-  *::-webkit-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: black silver;
-  }
-
   .table>:not(caption)>*>* {
     padding: 20px 12px 20px 12px;
   }

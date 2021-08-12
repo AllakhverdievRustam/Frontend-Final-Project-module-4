@@ -4,6 +4,7 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import BodyRegist from './components/RegistrationComponent/BodyRegist';
 import BodyAuth from './components/AuthorizationComponent/BodyAuth';
 import MainPage from './components/MainComponent/MainPage';
