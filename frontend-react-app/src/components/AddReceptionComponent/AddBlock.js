@@ -9,8 +9,6 @@ const AddBlock = ({ setReceptions }) => {
   const [complaint, setComplaint] = useState('');
   const doctorArray = ['', 'Doctor 1', 'Doctor 2', 'Doctor 3', 'Doctor 4', 'Doctor 5'];
 
-  let flagButton = false;
-
   const addReception = () => {
     const user = JSON.parse(localStorage.getItem('user'));
     const { authorization } = user;
@@ -33,6 +31,8 @@ const AddBlock = ({ setReceptions }) => {
       setReceptions(res.data.data);
     });
   }
+
+  const disabledButton = !(name && doctor && date && complaint);
 
   return (
     <div className="add-block w-100">
@@ -86,15 +86,10 @@ const AddBlock = ({ setReceptions }) => {
         />
       </div>
 
-      {
-        (name && doctor && date && complaint)
-          ? flagButton = false
-          : flagButton = true
-      }
       <button
         onClick={() => addReception()}
         type="button" className="btn btn-outline-dark mt-4"
-        disabled={flagButton}
+        disabled={disabledButton}
       >
         Добавить
       </button>

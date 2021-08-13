@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ModalEdit.scss';
 
-const ModalEdit = ({ elementEd, setReceptions }) => {
+const ModalEdit = ({ elementEd, setReceptions, isOpen }) => {
   const [nameEdit, setNameEdit] = useState('');
   const [doctorEdit, setDoctorEdit] = useState('');
   const [dateEdit, setDateEdit] = useState('');
@@ -18,13 +18,10 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
     }
   }, [elementEd]);
 
-  let flagButton = false;
-
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
 
   const editReception = () => {
-
     axios.patch('http://localhost:8000/editReception',
       {
         _id: elementEd._id,
@@ -42,6 +39,7 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
       setDateEdit('');
       setComplaintEdit('');
       setReceptions(res.data.data);
+      isOpen(false);
     });
   }
 
@@ -50,13 +48,17 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
     setDoctorEdit('');
     setDateEdit('');
     setComplaintEdit('');
+    isOpen(false);
   }
+
+  const disabledButtonEdit = !(nameEdit && doctorEdit && dateEdit && complaintEdit);
 
   return (
     <>
       <div
-        className="modal"
-        id="editModal" tabIndex="-1"
+        className="show modal fade"
+        id="editModal"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
@@ -79,7 +81,7 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
                     type="text"
                     name="user-name"
                     className="form-control w-100"
-                    value={nameEdit}
+                    value={nameEdit || ''}
                   />
                 </div>
 
@@ -90,7 +92,7 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
                     className="form-select"
                     name="doctor-name"
                     id="inputGroupSelect01"
-                    value={doctorEdit}
+                    value={doctorEdit || ''}
                   >
                     <option>{doctorEdit}</option>
                     {
@@ -109,7 +111,7 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
                     type="date"
                     name="date-name"
                     className="form-control"
-                    value={dateEdit}
+                    value={dateEdit || ''}
                   />
                 </div>
 
@@ -120,7 +122,7 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
                     type="text"
                     name="complaint-name"
                     className="form-control w-100"
-                    value={complaintEdit}
+                    value={complaintEdit || ''}
                   />
                 </div>
               </div >
@@ -129,24 +131,16 @@ const ModalEdit = ({ elementEd, setReceptions }) => {
               <button
                 type="button"
                 className="btn btn-outline-dark"
-                data-bs-dismiss="modal"
                 onClick={() => onClickCancel()}
               >
                 Cancel
               </button>
 
-              {
-                (nameEdit && doctorEdit && dateEdit && complaintEdit)
-                  ? flagButton = false
-                  : flagButton = true
-              }
-
               <button
                 type="button"
                 className="btn btn-outline-primary"
-                data-bs-dismiss="modal"
                 onClick={() => editReception()}
-                disabled={flagButton}
+                disabled={disabledButtonEdit}
               >
                 Save
               </button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const ModalDelete = ({ elementDel, setReceptions }) => {
+const ModalDelete = ({ elementDel, setReceptions, isOpen }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
 
@@ -14,12 +14,17 @@ const ModalDelete = ({ elementDel, setReceptions }) => {
       }
     ).then(res => {
       setReceptions(res.data.data);
+      isOpen(false);
     });
+  }
+
+  const onClickCancel = () => {
+    isOpen(false);
   }
 
   return (
     <div
-      className="modal fade"
+      className="show modal fade"
       id="deleteModal"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"
@@ -42,14 +47,13 @@ const ModalDelete = ({ elementDel, setReceptions }) => {
             <button
               type="button"
               className="btn btn-outline-dark"
-              data-bs-dismiss="modal"
+              onClick={() => onClickCancel()}
             >
               Cancel
             </button>
             <button
               type="button"
               className="btn btn-outline-primary"
-              data-bs-dismiss="modal"
               onClick={() => deleteReception()}
             >
               Delete

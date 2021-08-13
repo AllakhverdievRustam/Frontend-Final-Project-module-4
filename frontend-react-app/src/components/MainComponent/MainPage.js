@@ -12,22 +12,38 @@ const MainPage = () => {
   const [receptions, setReceptions] = useState([]);
   const [elementRecEdit, setElementRecEdit] = useState({});
   const [elementRecDelete, setElementRecDelete] = useState({});
+  const [useEffectDo, setUseEffectDo] = useState(true);
+  const [opentModalEdit, setOpentModalEdit] = useState(false);
+  const [opentModalDelete, setOpentModalDeelete] = useState(false);
   const thLable = ['Имя', 'Врач', 'Дата', 'Жалобы', ''];
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
 
   useEffect(() => {
-    if (!receptions.length) {
+    if (!receptions.length && useEffectDo === true) {
       axios.get('http://localhost:8000/getAllReceptions',
         {
           headers: { Authorization: authorization }
         }
       ).then(res => {
         setReceptions(res.data.data);
+        setUseEffectDo(false);
       });
+    } else {
+      setUseEffectDo(false);
     }
   }, [receptions]);
+
+  const onClickEdit = (element) => {
+    setElementRecEdit(element);
+    setOpentModalEdit(true);
+  }
+
+  const onClickDelete = (element) => {
+    setElementRecDelete(element);
+    setOpentModalDeelete(true);
+  }
 
   return (
     <div>
@@ -58,15 +74,11 @@ const MainPage = () => {
                     <div className="img-block">
                       <img
                         src={imgEdit}
-                        data-bs-toggle="modal"
-                        data-bs-target="#editModal"
-                        onClick={() => setElementRecEdit(element)}
+                        onClick={() => onClickEdit(element)}
                       />
                       <img
                         src={imgDelete}
-                        data-bs-toggle="modal"
-                        data-bs-target="#deleteModal"
-                        onClick={() => setElementRecDelete(element)}
+                        onClick={() => onClickDelete(element)}
                       />
                     </div>
                   </td>
@@ -77,18 +89,23 @@ const MainPage = () => {
         </table>
       </div>
 
-      <ModalDelete
-        className="modal"
-        id="#deleteModal"
-        elementDel={elementRecDelete}
-        setReceptions={setReceptions}
-      />
-      <ModalEdit
-        className="modal"
-        id="#editModal"
-        elementEd={elementRecEdit}
-        setReceptions={setReceptions}
-      />
+      {
+        opentModalDelete &&
+        <ModalDelete
+          elementDel={elementRecDelete}
+          setReceptions={setReceptions}
+          isOpen={setOpentModalDeelete}
+        />
+      }
+
+      {
+        opentModalEdit &&
+        <ModalEdit
+          elementEd={elementRecEdit}
+          setReceptions={setReceptions}
+          isOpen={setOpentModalEdit}
+        />
+      }
     </div>
   );
 }
