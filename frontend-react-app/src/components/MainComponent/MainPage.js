@@ -21,7 +21,7 @@ const MainPage = () => {
   const { authorization } = user;
 
   useEffect(() => {
-    if (!receptions.length && useEffectDo === true) {
+    if (!receptions.length && useEffectDo) {
       axios.get('http://localhost:8000/getAllReceptions',
         {
           headers: { Authorization: authorization }
@@ -91,20 +91,20 @@ const MainPage = () => {
 
       {
         opentModalDelete &&
-        <ModalDelete
-          elementDel={elementRecDelete}
-          setReceptions={setReceptions}
-          isOpen={setOpentModalDeelete}
-        />
+          <ModalDelete
+            elementDel={elementRecDelete}
+            setReceptions={setReceptions}
+            isOpen={setOpentModalDeelete}
+          />
       }
 
       {
         opentModalEdit &&
-        <ModalEdit
-          elementEd={elementRecEdit}
-          setReceptions={setReceptions}
-          isOpen={setOpentModalEdit}
-        />
+          <ModalEdit
+            elementEd={elementRecEdit}
+            setReceptions={setReceptions}
+            isOpen={setOpentModalEdit}
+          />
       }
     </div>
   );
