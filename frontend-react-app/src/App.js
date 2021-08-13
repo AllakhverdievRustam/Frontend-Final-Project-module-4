@@ -4,21 +4,20 @@ import {
   Route,
   Redirect
 } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import BodyRegist from './components/RegistrationComponent/BodyRegist';
 import BodyAuth from './components/AuthorizationComponent/BodyAuth';
 import MainPage from './components/MainComponent/MainPage';
 import './App.scss';
 
-const App = () => {
-  const userData = JSON.parse(localStorage.getItem('user'));
-  
+const App = () => {  
   return (
-    <div>
+    <div className="app-blick">
       <Switch>
         <Route path='/Authorization' component={BodyAuth} />
         <Route path='/Registration' component={BodyRegist} />
         <Route path='/MainPage'>
-          <MainPage user={userData} />
+          <MainPage />
         </Route>
         <Redirect from='/' to='/Registration' />
       </Switch>

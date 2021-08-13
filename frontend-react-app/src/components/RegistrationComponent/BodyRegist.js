@@ -37,7 +37,7 @@ const BodyRegist = () => {
 
   return (
     <>
-      <Header name='Зарегистрироваться в системе' />
+      <Header name='Зарегистрироваться в системе' flag={false} />
       <div className="main-block-login w-100">
 
         <Svg />
