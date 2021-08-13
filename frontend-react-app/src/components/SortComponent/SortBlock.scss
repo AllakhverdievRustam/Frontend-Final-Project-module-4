@@ -1,0 +1,20 @@
+.sort-block {
+  width: 95%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  color: black;
+  margin-bottom: 20px;
+
+  p {
+    margin: 0px;
+    margin-left: 15px;
+  }
+
+  .sort-input {
+    width: 18%;
+    margin-left: 15px;
+  }
+}

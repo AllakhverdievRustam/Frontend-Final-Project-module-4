@@ -4,6 +4,7 @@ import ModalDelete from '../ModalDelete/ModalDelete';
 import ModalEdit from '../ModalEdit/ModalEdit';
 import Header from '../HeaderComponent/Header';
 import AddBlock from '../AddReceptionComponent/AddBlock';
+import SortBlock from '../SortComponent/SortBlock';
 import imgEdit from '../../source/images/edit.png';
 import imgDelete from '../../source/images/delete.png';
 import './MainPage.scss';
@@ -52,6 +53,8 @@ const MainPage = () => {
       <AddBlock setReceptions={setReceptions} />
 
       <div className="block-main w-100">
+        <SortBlock receptions={receptions} setReceptions={setReceptions} />
+
         <table className="table table-striped">
           <thead>
             <tr>
@@ -91,20 +94,20 @@ const MainPage = () => {
 
       {
         opentModalDelete &&
-          <ModalDelete
-            elementDel={elementRecDelete}
-            setReceptions={setReceptions}
-            isOpen={setOpentModalDeelete}
-          />
+        <ModalDelete
+          elementDel={elementRecDelete}
+          setReceptions={setReceptions}
+          isOpen={setOpentModalDeelete}
+        />
       }
 
       {
         opentModalEdit &&
-          <ModalEdit
-            elementEd={elementRecEdit}
-            setReceptions={setReceptions}
-            isOpen={setOpentModalEdit}
-          />
+        <ModalEdit
+          elementEd={elementRecEdit}
+          setReceptions={setReceptions}
+          isOpen={setOpentModalEdit}
+        />
       }
     </div>
   );
