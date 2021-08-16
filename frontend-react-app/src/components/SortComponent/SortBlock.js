@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './SortBlock.scss';
 
-const SortBlock = ({ receptions, setReceptions }) => {
+const SortBlock = ({ receptions, setReceptions, setUseEffectDo, lengthReceptionArr, setLengthReceptionArr }) => {
   const [sortLable, setSortLable] = useState('');
-  const [sortDirection, setSortDirection] = useState('По возрастанию');
+  const [sortDirection, setSortDirection] = useState('asc');
   const sortArrLable = [
     { lable: 'None', value: '' },
     { lable: 'Имя', value: 'nameUser' },
@@ -15,24 +15,16 @@ const SortBlock = ({ receptions, setReceptions }) => {
     { value: 'desc', title: 'По убыванию' }
   ];
 
-  const onChangeLable = (e) => {
-    if (e.target.value !== '') {
-      receptions.sort((a, b) => a[e.target.value] > b[e.target.value] ? -1 : a[e.target.value] < b[e.target.value] ? 1 : 0);
-      setReceptions([...receptions]);
-    }
-    setSortLable(e.target.value);
-  }
-
-  const onChangeDirection = (e) => {
+  useEffect(() => {
     if (sortLable !== '') {
-      switch (e.target.value) {
+      switch (sortDirection) {
         case 'asc':
-          receptions.sort((a, b) => a[sortLable] > b[sortLable] ? -1 : a[sortLable] < b[sortLable] ? 1 : 0);
+          receptions.sort((a, b) => a[sortLable] < b[sortLable] ? -1 : a[sortLable] > b[sortLable] ? 1 : 0);
           setReceptions([...receptions]);
           break;
 
         case 'desc':
-          receptions.sort((a, b) => a[sortLable] < b[sortLable] ? -1 : a[sortLable] > b[sortLable] ? 1 : 0);
+          receptions.sort((a, b) => a[sortLable] > b[sortLable] ? -1 : a[sortLable] < b[sortLable] ? 1 : 0);
           setReceptions([...receptions]);
           break;
 
@@ -40,6 +32,18 @@ const SortBlock = ({ receptions, setReceptions }) => {
           break;
       }
     }
+  }, [lengthReceptionArr, sortDirection, sortLable]);
+
+  const onChangeLable = (e) => {
+    if (e.target.value === '') {
+      setSortLable(e.target.value);
+      setUseEffectDo(true);
+    } else {
+      setSortLable(e.target.value);
+    }
+  }
+
+  const onChangeDirection = (e) => {
     setSortDirection(e.target.value);
   }
 
@@ -52,7 +56,6 @@ const SortBlock = ({ receptions, setReceptions }) => {
       <select
         onChange={(e) => onChangeLable(e)}
         className="sort-input form-select"
-        name="sort-lable-name"
         id="inputGroupSelect01"
         value={sortLable}
       >
@@ -78,7 +81,6 @@ const SortBlock = ({ receptions, setReceptions }) => {
           <select
             onChange={(e) => onChangeDirection(e)}
             className="sort-input form-select"
-            name="sort-direction-name"
             id="inputGroupSelect01"
             value={sortDirection}
           >
