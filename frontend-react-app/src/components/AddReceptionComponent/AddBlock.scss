@@ -9,7 +9,8 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  height: 15vh;
+  height: auto;
+  min-height: 15vh;
   box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.25);
   color: black;
   background-color: #C5E9FF;
@@ -34,5 +35,20 @@
 
   p {
     margin: 0px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .add-block .add-block-all {
+    flex-direction: column;
+  }
+
+  .inpun-block {
+    width: 95%;
+    margin: 10px 0px;
+  }
+
+  .btn-add {
+    margin: 15px 0px;
   }
 }

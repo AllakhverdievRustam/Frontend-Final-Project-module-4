@@ -5,7 +5,7 @@
   margin: auto;
 }
 
-.main-block-login {
+.main-block-regist {
   height: 85vh;
   display: flex;
   flex-direction: row;
@@ -14,9 +14,10 @@
 
   svg {
     margin-right: 40px;
+    margin-left: 20px;
   }
 
-  .login-form {
+  .regist-form {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -25,7 +26,7 @@
     width: 80%;
   }
   
-  .button-login {
+  .button-regist {
     margin-left: auto;
   }
   
@@ -38,25 +39,27 @@
   }
 }
 
-.log-block {
+.regist-block {
   background-color: white;
-  height: 53vh;
+  height: auto;
   width: 400px;
   margin-left: 40px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 
-  h1 {
+  .h1-regist {
     font-size: 36px;
     font-weight: 300;
     font-style: normal;
     line-height: 42px;
     color: black;
+    margin: 24px;
   }
 
-  .trans-auth {
+  .trans-regist {
     text-decoration: none;
     color: black;
     font-weight: 300;
@@ -65,17 +68,46 @@
     margin-left: auto;
     margin-right: 40px;
     cursor: pointer;
+
+    .p-regist {
+      margin: 0px;
+      margin-bottom: 20px;
+    }
   }
 
-  .trans-auth:focus {
+  .trans-regist:focus {
     color: green;
   }
 
-  .trans-auth:active {
+  .trans-regist:active {
     color: green;
   }
 
-  .trans-auth:hover {
+  .trans-regist:hover {
     color: green;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .regist-block {
+    margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .regist-block {
+    margin: 0px 20px;
+  }
+}
+
+@media screen and (max-height: 570px) {
+  .regist-block .h1-regist {
+    font-size: 30px;
+    margin: 0px;
+    margin-bottom: 10px;
+  }
+
+  .regist-block .trans-regist .p-regist {
+    margin-bottom: 10px;
   }
 }

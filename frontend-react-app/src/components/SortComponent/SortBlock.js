@@ -38,9 +38,9 @@ const SortBlock = ({ receptions, setReceptions, setUseEffectDo, lengthReceptionA
     const result = e.target.value;
     if (result) {
       setSortLable(result);
-      setUseEffectDo(true);
     } else {
       setSortLable(result);
+      setUseEffectDo(true);
     }
   }
 

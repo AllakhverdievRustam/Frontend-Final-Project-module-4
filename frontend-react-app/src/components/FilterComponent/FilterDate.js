@@ -81,7 +81,7 @@ const FilterDate = ({ receptions, setUseEffectDo, setReceptions, lengthReception
 
             <button
               type="button"
-              className="btn btn-outline-dark"
+              className="btn-filter btn btn-outline-dark"
               onClick={() => filterReceptions()}
             >
               Фильтровать

@@ -47,7 +47,7 @@ const BodyAuth = () => {
         <Svg />
 
         <div className="auth-block">
-          <h1 className="m-5">
+          <h1 className="h1-auth m-4 text-center">
             Войти в систему
           </h1>
 
@@ -79,8 +79,8 @@ const BodyAuth = () => {
             }
           </div>
 
-          <Link className="trans-regist" to='/Registration'>
-            <p>Зарегистрироваться</p>
+          <Link className="trans-auth" to='/Registration'>
+            <p className="p-auth">Зарегистрироваться</p>
           </Link>
         </div>
       </div>

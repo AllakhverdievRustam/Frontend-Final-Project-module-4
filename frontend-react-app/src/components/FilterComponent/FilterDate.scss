@@ -13,13 +13,13 @@
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    width: 31%;
+    width: 99%;
     height: auto;
     margin-left: auto;
 
     p {
       margin: 0px;
-      margin-right: 15px;
+      margin-right: 10px;
     }
 
     a {
@@ -49,5 +49,35 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .filter-block {
+    flex-direction: column;
+
+    .add-filter-block {
+      margin-left: 0;
+      width: auto;
+      justify-content: center;
+    }
+
+    .input-filter-block{
+      width: 95%;
+      justify-content: space-between;
+      margin: 5px 0px;
+
+      input {
+        width: 88%;
+      }
+    }
+
+    .btn-filter {
+      margin: 20px 0px 5px 0px;
+    }
+
+    img {
+      margin-top: 20px;
+    }
   }
 }

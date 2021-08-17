@@ -1,0 +1,10 @@
+.svg-header {
+  min-width: 59px;
+  min-height: 42px;
+}
+
+@media screen and (max-width: 390px) {
+  .svg-header {
+    display: none;
+  }
+}
