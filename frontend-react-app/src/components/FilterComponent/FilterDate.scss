@@ -57,7 +57,7 @@
     flex-direction: column;
 
     .add-filter-block {
-      margin-left: 0px;
+      margin-left: 0;
       width: auto;
       justify-content: center;
     }
@@ -65,7 +65,7 @@
     .input-filter-block{
       width: 95%;
       justify-content: space-between;
-      margin: 5px 0px 5px 0px;
+      margin: 5px 0px;
 
       input {
         width: 88%;
@@ -77,7 +77,7 @@
     }
 
     img {
-      margin: 20px 0px 0px 0px;
+      margin-top: 20px;
     }
   }
 }
