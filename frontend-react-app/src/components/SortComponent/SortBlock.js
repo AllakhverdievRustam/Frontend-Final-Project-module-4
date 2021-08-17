@@ -16,7 +16,7 @@ const SortBlock = ({ receptions, setReceptions, setUseEffectDo, lengthReceptionA
   ];
 
   useEffect(() => {
-    if (sortLable !== '') {
+    if (sortLable) {
       switch (sortDirection) {
         case 'asc':
           receptions.sort((a, b) => a[sortLable] < b[sortLable] ? -1 : a[sortLable] > b[sortLable] ? 1 : 0);
@@ -35,11 +35,12 @@ const SortBlock = ({ receptions, setReceptions, setUseEffectDo, lengthReceptionA
   }, [lengthReceptionArr, sortDirection, sortLable]);
 
   const onChangeLable = (e) => {
-    if (e.target.value === '') {
-      setSortLable(e.target.value);
+    const result = e.target.value;
+    if (result) {
+      setSortLable(result);
       setUseEffectDo(true);
     } else {
-      setSortLable(e.target.value);
+      setSortLable(result);
     }
   }
 

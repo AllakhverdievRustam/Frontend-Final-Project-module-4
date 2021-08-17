@@ -31,8 +31,9 @@ const MainPage = () => {
         }
       ).then(res => {
         setUseEffectDo(false);
-        setReceptions(res.data.data);
-        setLengthReceptionArr(res.data.data.length);
+        const result = res.data.data;
+        setReceptions(result);
+        setLengthReceptionArr(result.length);
       });
     }
   });
@@ -52,8 +53,8 @@ const MainPage = () => {
       <Header name='Приемы' flag={true} />
 
       <AddBlock
-      setReceptions={setReceptions}
-      setLengthReceptionArr={setLengthReceptionArr}
+        setReceptions={setReceptions}
+        setLengthReceptionArr={setLengthReceptionArr}
       />
 
       <div className="block-main w-100">

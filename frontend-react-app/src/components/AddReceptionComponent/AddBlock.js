@@ -28,8 +28,9 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr }) => {
       setDoctor('');
       setDate('');
       setComplaint('');
-      setReceptions(res.data.data);
-      setLengthReceptionArr(res.data.data.length);
+      const result = res.data.data;
+      setReceptions(result);
+      setLengthReceptionArr(result.length);
     });
   }
 

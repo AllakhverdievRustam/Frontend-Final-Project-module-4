@@ -13,8 +13,9 @@ const ModalDelete = ({ elementDel, setReceptions, isOpen, setLengthReceptionArr 
         }
       }
     ).then(res => {
-      setReceptions(res.data.data);
-      setLengthReceptionArr(res.data.data.length);
+      const result = res.data.data;
+      setReceptions(result);
+      setLengthReceptionArr(result.length);
       isOpen(false);
     });
   }

@@ -38,7 +38,8 @@ const ModalEdit = ({ elementEd, setReceptions, isOpen }) => {
       setDoctorEdit('');
       setDateEdit('');
       setComplaintEdit('');
-      setReceptions(res.data.data);
+      const result = res.data.data;
+      setReceptions(result);
       isOpen(false);
     });
   }
