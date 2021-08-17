@@ -10,7 +10,7 @@ import BodyAuth from './components/AuthorizationComponent/BodyAuth';
 import MainPage from './components/MainComponent/MainPage';
 import './App.scss';
 
-const App = () => {  
+const App = () => {
   return (
     <div className="app-blick">
       <Switch>

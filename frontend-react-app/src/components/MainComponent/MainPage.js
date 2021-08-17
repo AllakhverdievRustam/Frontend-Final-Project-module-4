@@ -5,6 +5,7 @@ import ModalEdit from '../ModalEdit/ModalEdit';
 import Header from '../HeaderComponent/Header';
 import AddBlock from '../AddReceptionComponent/AddBlock';
 import SortBlock from '../SortComponent/SortBlock';
+import FilterDate from '../FilterComponent/FilterDate';
 import imgEdit from '../../source/images/edit.png';
 import imgDelete from '../../source/images/delete.png';
 import './MainPage.scss';
@@ -16,25 +17,26 @@ const MainPage = () => {
   const [useEffectDo, setUseEffectDo] = useState(true);
   const [opentModalEdit, setOpentModalEdit] = useState(false);
   const [opentModalDelete, setOpentModalDeelete] = useState(false);
+  const [lengthReceptionArr, setLengthReceptionArr] = useState(0);
   const thLable = ['Имя', 'Врач', 'Дата', 'Жалобы', ''];
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
 
   useEffect(() => {
-    if (!receptions.length && useEffectDo) {
+    if (useEffectDo) {
       axios.get('http://localhost:8000/getAllReceptions',
         {
           headers: { Authorization: authorization }
         }
       ).then(res => {
-        setReceptions(res.data.data);
         setUseEffectDo(false);
+        const result = res.data.data;
+        setReceptions(result);
+        setLengthReceptionArr(result.length);
       });
-    } else {
-      setUseEffectDo(false);
     }
-  }, [receptions]);
+  });
 
   const onClickEdit = (element) => {
     setElementRecEdit(element);
@@ -50,10 +52,26 @@ const MainPage = () => {
     <div>
       <Header name='Приемы' flag={true} />
 
-      <AddBlock setReceptions={setReceptions} />
+      <AddBlock
+        setReceptions={setReceptions}
+        setLengthReceptionArr={setLengthReceptionArr}
+      />
 
       <div className="block-main w-100">
-        <SortBlock receptions={receptions} setReceptions={setReceptions} />
+        <SortBlock
+          receptions={receptions}
+          setReceptions={setReceptions}
+          setUseEffectDo={setUseEffectDo}
+          lengthReceptionArr={lengthReceptionArr}
+        />
+
+        <FilterDate
+          receptions={receptions}
+          setReceptions={setReceptions}
+          setUseEffectDo={setUseEffectDo}
+          lengthReceptionArr={lengthReceptionArr}
+          setLengthReceptionArr={setLengthReceptionArr}
+        />
 
         <table className="table table-striped">
           <thead>
@@ -98,6 +116,7 @@ const MainPage = () => {
           elementDel={elementRecDelete}
           setReceptions={setReceptions}
           isOpen={setOpentModalDeelete}
+          setLengthReceptionArr={setLengthReceptionArr}
         />
       }
 

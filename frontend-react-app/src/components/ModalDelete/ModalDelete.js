@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const ModalDelete = ({ elementDel, setReceptions, isOpen }) => {
+const ModalDelete = ({ elementDel, setReceptions, isOpen, setLengthReceptionArr }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
 
@@ -13,7 +13,9 @@ const ModalDelete = ({ elementDel, setReceptions, isOpen }) => {
         }
       }
     ).then(res => {
-      setReceptions(res.data.data);
+      const result = res.data.data;
+      setReceptions(result);
+      setLengthReceptionArr(result.length);
       isOpen(false);
     });
   }

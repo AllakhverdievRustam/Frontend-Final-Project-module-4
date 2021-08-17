@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddBlock.scss';
 
-const AddBlock = ({ setReceptions }) => {
+const AddBlock = ({ setReceptions, setLengthReceptionArr }) => {
   const [name, setName] = useState('');
   const [doctor, setDoctor] = useState('');
   const [date, setDate] = useState('');
@@ -28,7 +28,9 @@ const AddBlock = ({ setReceptions }) => {
       setDoctor('');
       setDate('');
       setComplaint('');
-      setReceptions(res.data.data);
+      const result = res.data.data;
+      setReceptions(result);
+      setLengthReceptionArr(result.length);
     });
   }
 
@@ -36,63 +38,65 @@ const AddBlock = ({ setReceptions }) => {
 
   return (
     <div className="add-block w-100">
-      <div className="inpun-block">
-        <p>Имя:</p>
-        <input
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          name="user-name"
-          className="form-control w-100"
-          value={name}
-        />
-      </div>
+      <div className="add-block-all">
+        <div className="inpun-block">
+          <p>Имя:</p>
+          <input
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            name="user-name"
+            className="form-control w-100"
+            value={name}
+          />
+        </div>
 
-      <div className="inpun-block">
-        <p>Врач:</p>
-        <select
-          onChange={(e) => setDoctor(e.target.value)}
-          className="form-select"
-          name="doctor-name"
-          id="inputGroupSelect01"
-          value={doctor}
+        <div className="inpun-block">
+          <p>Врач:</p>
+          <select
+            onChange={(e) => setDoctor(e.target.value)}
+            className="form-select"
+            name="doctor-name"
+            id="inputGroupSelect01"
+            value={doctor}
+          >
+            {
+              doctorArray.map((element, index) => (
+                <option key={`key-${index}`} value={element}>{element}</option>
+              ))
+            }
+          </select>
+        </div>
+
+        <div className="inpun-block">
+          <p>Дата:</p>
+          <input
+            onChange={(e) => setDate(e.target.value)}
+            type="date"
+            name="date-name"
+            className="form-control"
+            value={date}
+          />
+        </div>
+
+        <div className="inpun-block">
+          <p>Жалобы:</p>
+          <input
+            onChange={(e) => setComplaint(e.target.value)}
+            type="text"
+            name="complaint-name"
+            className="form-control w-100"
+            value={complaint}
+          />
+        </div>
+
+        <button
+          onClick={() => addReception()}
+          type="button" className="btn btn-outline-dark mt-4"
+          disabled={disabledButton}
         >
-          {
-            doctorArray.map((element, index) => (
-              <option key={`key-${index}`} value={element}>{element}</option>
-            ))
-          }
-        </select>
+          Добавить
+        </button>
       </div>
-
-      <div className="inpun-block">
-        <p>Дата:</p>
-        <input
-          onChange={(e) => setDate(e.target.value)}
-          type="date"
-          name="date-name"
-          className="form-control"
-          value={date}
-        />
-      </div>
-
-      <div className="inpun-block">
-        <p>Жалобы:</p>
-        <input
-          onChange={(e) => setComplaint(e.target.value)}
-          type="text"
-          name="complaint-name"
-          className="form-control w-100"
-          value={complaint}
-        />
-      </div>
-
-      <button
-        onClick={() => addReception()}
-        type="button" className="btn btn-outline-dark mt-4"
-        disabled={disabledButton}
-      >
-        Добавить
-      </button>
     </div >
   );
 }
