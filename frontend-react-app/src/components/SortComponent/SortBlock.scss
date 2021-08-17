@@ -18,3 +18,20 @@
     margin-left: 15px;
   }
 }
+
+@media screen and (max-width: 550px) {
+  .sort-block {
+    flex-direction: column;
+
+    p {
+      margin: 0px;
+      margin-bottom: 5px;
+    }
+
+    .sort-input {
+      width: 95%;
+      margin: 0px;
+      margin-bottom: 5px;
+    }
+  }
+}

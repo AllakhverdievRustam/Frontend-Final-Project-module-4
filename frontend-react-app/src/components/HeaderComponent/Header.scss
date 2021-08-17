@@ -26,3 +26,30 @@
   margin-left: auto;
   margin-right: 40px;
 }
+
+@media screen and (max-width: 865px) {
+  .header-lable {
+    font-size: 30px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .header-lable {
+    font-size: 25px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .header-lable {
+    font-size: 20px;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .header {
+    justify-content: center;
+  }
+}

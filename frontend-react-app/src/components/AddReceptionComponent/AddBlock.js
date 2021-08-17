@@ -91,7 +91,8 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr }) => {
 
         <button
           onClick={() => addReception()}
-          type="button" className="btn btn-outline-dark mt-4"
+          type="button"
+          className="btn-add btn btn-outline-dark mt-4"
           disabled={disabledButton}
         >
           Добавить

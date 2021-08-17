@@ -38,16 +38,16 @@ const BodyRegist = () => {
   return (
     <>
       <Header name='Зарегистрироваться в системе' flag={false} />
-      <div className="main-block-login w-100">
+      <div className="main-block-regist w-100">
 
         <Svg />
 
-        <div className="log-block">
-          <h1 className="m-4">
+        <div className="regist-block">
+          <h1 className="h1-regist">
             Регистрация
           </h1>
 
-          <div className="login-form mb-3">
+          <div className="regist-form mb-3">
             <label className="mb-1">login:</label>
             <input
               onChange={(e) => setLoginInput(e.target.value)}
@@ -75,7 +75,7 @@ const BodyRegist = () => {
               className="form-control mb-4"
             />
 
-            <button onClick={() => registration()} className="button-login btn btn-outline-success">
+            <button onClick={() => registration()} className="button-regist btn btn-outline-success">
               Зарегистрироваться
             </button>
 
@@ -84,8 +84,8 @@ const BodyRegist = () => {
             }
           </div>
 
-          <Link className="trans-auth" to='/Authorization'>
-            <p>Авторизоваться</p>
+          <Link className="trans-regist" to='/Authorization'>
+            <p className="p-regist"> Авторизоваться </p>
           </Link>
         </div>
       </div>

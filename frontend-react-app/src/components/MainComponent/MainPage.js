@@ -30,8 +30,8 @@ const MainPage = () => {
           headers: { Authorization: authorization }
         }
       ).then(res => {
-        setUseEffectDo(false);
         const result = res.data.data;
+        setUseEffectDo(false);
         setReceptions(result);
         setLengthReceptionArr(result.length);
       });

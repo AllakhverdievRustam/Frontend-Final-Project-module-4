@@ -10,7 +10,7 @@ const Header = ({ name, flag }) => {
     <div className="header w-100">
       <Svg />
 
-      <p className="header-lable m-4">{name}</p>
+      <p className="header-lable text-center m-4">{name}</p>
 
       {
         flag &&

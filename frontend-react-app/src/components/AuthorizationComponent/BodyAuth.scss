@@ -14,6 +14,7 @@
 
   svg {
     margin-right: 40px;
+    margin-left: 20px;
   }
 
   .auth-form {
@@ -40,15 +41,16 @@
 
 .auth-block {
   background-color: white;
-  height: 52vh;
+  height: auto;
   width: 400px;
   margin-left: 40px;
+  margin-right: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 
-  h1 {
+  .h1-auth {
     font-size: 36px;
     font-weight: 300;
     font-style: normal;
@@ -56,7 +58,7 @@
     color: black;
   }
 
-  .trans-regist {
+  .trans-auth {
     text-decoration: none;
     color: black;
     font-weight: 300;
@@ -65,17 +67,50 @@
     margin-left: auto;
     margin-right: 40px;
     cursor: pointer;
+
+    .p-auth {
+      margin: 0px;
+      margin-bottom: 20px;
+    }
   }
 
-  .trans-regist:focus {
+  .trans-auth:focus {
     color: green;
   }
 
-  .trans-regist:active {
+  .trans-auth:active {
     color: green;
   }
 
-  .trans-regist:hover {
+  .trans-auth:hover {
     color: green;
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .auth-block {
+    margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .auth-block .h1-auth {
+    font-size: 29px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .auth-block {
+    margin: 0px 20px 0px 20px;
+  }
+}
+
+@media screen and (max-height: 570px) {
+  .auth-block .h1-auth {
+    font-size: 30px;
+  }
+
+  .auth-block .trans-auth .p-auth {
+    margin-bottom: 10px;
   }
 }
