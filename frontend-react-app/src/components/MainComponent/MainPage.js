@@ -6,6 +6,7 @@ import Header from '../HeaderComponent/Header';
 import AddBlock from '../AddReceptionComponent/AddBlock';
 import SortBlock from '../SortComponent/SortBlock';
 import FilterDate from '../FilterComponent/FilterDate';
+import Pagination from '../PaginationComponent/Pagination';
 import imgEdit from '../../source/images/edit.png';
 import imgDelete from '../../source/images/delete.png';
 import './MainPage.scss';
@@ -18,6 +19,9 @@ const MainPage = () => {
   const [opentModalEdit, setOpentModalEdit] = useState(false);
   const [opentModalDelete, setOpentModalDeelete] = useState(false);
   const [lengthReceptionArr, setLengthReceptionArr] = useState(0);
+  const [offset, setOffset] = useState(0);
+  const [limit, setLimit] = useState(5);
+  const [countAllReception, setCountAllReception] = useState(0);
   const thLable = ['Имя', 'Врач', 'Дата', 'Жалобы', ''];
 
   const user = JSON.parse(localStorage.getItem('user'));
@@ -25,11 +29,12 @@ const MainPage = () => {
 
   useEffect(() => {
     if (useEffectDo) {
-      axios.get('http://localhost:8000/getAllReceptions',
+      axios.get(`http://localhost:8000/getAllReceptions?limit=${limit}&offset=${offset}`,
         {
           headers: { Authorization: authorization }
         }
       ).then(res => {
+        setCountAllReception(res.data.length);
         const result = res.data.data;
         setUseEffectDo(false);
         setReceptions(result);
@@ -55,6 +60,9 @@ const MainPage = () => {
       <AddBlock
         setReceptions={setReceptions}
         setLengthReceptionArr={setLengthReceptionArr}
+        offset={offset}
+        limit={limit}
+        setCountAllReception={setCountAllReception}
       />
 
       <div className="block-main w-100">
@@ -108,6 +116,13 @@ const MainPage = () => {
             }
           </tbody>
         </table>
+
+        <Pagination
+          setOffset={setOffset}
+          limit={limit}
+          countAllReception={countAllReception}
+          setUseEffectDo={setUseEffectDo}
+        />
       </div>
 
       {
@@ -117,6 +132,9 @@ const MainPage = () => {
           setReceptions={setReceptions}
           isOpen={setOpentModalDeelete}
           setLengthReceptionArr={setLengthReceptionArr}
+          offset={offset}
+          limit={limit}
+          setCountAllReception={setCountAllReception}
         />
       }
 
@@ -126,6 +144,9 @@ const MainPage = () => {
           elementEd={elementRecEdit}
           setReceptions={setReceptions}
           isOpen={setOpentModalEdit}
+          offset={offset}
+          limit={limit}
+          setCountAllReception={setCountAllReception}
         />
       }
     </div>

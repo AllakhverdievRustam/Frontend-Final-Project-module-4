@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddBlock.scss';
 
-const AddBlock = ({ setReceptions, setLengthReceptionArr }) => {
+const AddBlock = ({ setReceptions, setLengthReceptionArr, offset, limit, setCountAllReception }) => {
   const [name, setName] = useState('');
   const [doctor, setDoctor] = useState('');
   const [date, setDate] = useState('');
@@ -13,7 +13,7 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr }) => {
     const user = JSON.parse(localStorage.getItem('user'));
     const { authorization } = user;
 
-    axios.post('http://localhost:8000/createNewReception',
+    axios.post(`http://localhost:8000/createNewReception?limit=${limit}&offset=${offset}`,
       {
         nameUser: name,
         nameDoctor: doctor,
@@ -28,6 +28,7 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr }) => {
       setDoctor('');
       setDate('');
       setComplaint('');
+      setCountAllReception(res.data.length);
       const result = res.data.data;
       setReceptions(result);
       setLengthReceptionArr(result.length);
