@@ -122,6 +122,7 @@ const MainPage = () => {
           limit={limit}
           countAllReception={countAllReception}
           setUseEffectDo={setUseEffectDo}
+          offset={offset}
         />
       </div>
 

@@ -18,7 +18,9 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr, offset, limit, setCoun
         nameUser: name,
         nameDoctor: doctor,
         date: date,
-        complaint: complaint
+        complaint: complaint,
+        limit,
+        offset
       },
       {
         headers: { Authorization: authorization }

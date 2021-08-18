@@ -22,13 +22,15 @@ const ModalEdit = ({ elementEd, setReceptions, isOpen, offset, limit, setCountAl
   const { authorization } = user;
 
   const editReception = () => {
-    axios.patch(`http://localhost:8000/editReception?limit=${limit}&offset=${offset}`,
+    axios.patch('http://localhost:8000/editReception',
       {
         _id: elementEd._id,
         nameUser: nameEdit,
         nameDoctor: doctorEdit,
         date: dateEdit,
-        complaint: complaintEdit
+        complaint: complaintEdit,
+        limit,
+        offset
       },
       {
         headers: { Authorization: authorization }

@@ -2,3 +2,15 @@
   color: black;
   cursor: pointer;
 }
+
+.page-item.active .page-link {
+  background-color: black;
+  border-color: black;
+}
+
+.page-link:hover {
+  z-index: 2;
+  color: black;
+  background-color: #d1eeff;
+  border-color: black;
+}
