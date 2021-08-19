@@ -19,13 +19,14 @@ const MainPage = () => {
   const [opentModalEdit, setOpentModalEdit] = useState(false);
   const [opentModalDelete, setOpentModalDeelete] = useState(false);
   const [offset, setOffset] = useState(0);
-  const [limit, setLimit] = useState(5);
   const [sortLable, setSortLable] = useState("");
   const [sortDirection, setSortDirection] = useState("");
   const [firstDate, setFirstDate] = useState("");
   const [lastDate, setLastDate] = useState("");
   const [countAllReception, setCountAllReception] = useState(0);
   const thLable = ['Имя', 'Врач', 'Дата', 'Жалобы', ''];
+
+  const limit = 5;
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
@@ -93,7 +94,12 @@ const MainPage = () => {
             <tr>
               {
                 thLable.map((element, index) => (
-                  <th key={`key-${index}`} scope="col">{element}</th>
+                  <th
+                    key={`key-${index}`}
+                    scope="col"
+                  >
+                    {element}
+                  </th>
                 ))
               }
             </tr>
@@ -111,10 +117,12 @@ const MainPage = () => {
                       <img
                         src={imgEdit}
                         onClick={() => onClickEdit(element)}
+                        alt="edit reception"
                       />
                       <img
                         src={imgDelete}
                         onClick={() => onClickDelete(element)}
+                        alt="delete reception"
                       />
                     </div>
                   </td>

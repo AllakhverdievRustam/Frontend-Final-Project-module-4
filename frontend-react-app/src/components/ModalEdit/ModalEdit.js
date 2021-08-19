@@ -16,7 +16,7 @@ const ModalEdit = ({ elementEd, isOpen, setUseEffectDo }) => {
       setDateEdit(elementEd.date);
       setComplaintEdit(elementEd.complaint);
     }
-  }, [elementEd]);
+  }, [elementEd, nameEdit, doctorEdit, dateEdit, complaintEdit]);
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
@@ -33,7 +33,7 @@ const ModalEdit = ({ elementEd, isOpen, setUseEffectDo }) => {
       {
         headers: { Authorization: authorization }
       }
-    ).then(res => {
+    ).then(() => {
       setNameEdit('');
       setDoctorEdit('');
       setDateEdit('');
@@ -98,7 +98,12 @@ const ModalEdit = ({ elementEd, isOpen, setUseEffectDo }) => {
                     {
                       doctorArray.map((element, index) => (
                         element !== doctorEdit &&
-                        <option key={`key-${index}`} value={element}>{element}</option>
+                        <option
+                          key={`key-${index}`}
+                          value={element}
+                        >
+                          {element}
+                        </option>
                       ))
                     }
                   </select>

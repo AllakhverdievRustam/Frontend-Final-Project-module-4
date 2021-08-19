@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Svg from '../Elements/SvgAddFilter/SvgAddFilter';
 import imgDelete from '../../source/images/delete.png';
 import './FilterDate.scss';
@@ -26,9 +26,12 @@ const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffe
               Добавить фильтр по дате:
             </p>
 
-            <a onClick={(e) => setFlagAddFilter(true)}>
+            <div
+              onClick={() => setFlagAddFilter(true)}
+              className="add-filter-button"
+            >
               <Svg />
-            </a>
+            </div>
 
           </div>
           :
@@ -70,6 +73,7 @@ const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffe
             <img
               src={imgDelete}
               onClick={() => onClickDeleteFilter()}
+              alt="delete filter"
             />
           </>
       }

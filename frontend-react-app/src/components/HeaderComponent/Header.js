@@ -14,7 +14,11 @@ const Header = ({ name, flag }) => {
 
       {
         flag &&
-        <button onClick={() => history.push('/Authorization')} type="button" className="button-header btn btn-outline-dark">
+        <button
+          onClick={() => history.push('/Authorization')}
+          type="button"
+          className="button-header btn btn-outline-dark"
+        >
           Выход
         </button>
       }

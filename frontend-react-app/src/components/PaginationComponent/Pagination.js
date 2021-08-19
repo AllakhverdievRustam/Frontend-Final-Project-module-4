@@ -28,21 +28,37 @@ const Pagination = ({ setOffset, limit, countAllReception, setUseEffectDo, offse
     <nav>
       <ul className="pagination">
         <li className="page-item">
-          <a onClick={() => onClickFirstPage()} className="pag-block page-link" aria-label="Previous">
+          <div
+            onClick={() => onClickFirstPage()}
+            className="pag-block page-link"
+            aria-label="Previous"
+          >
             <span aria-hidden="true">&laquo;</span>
-          </a>
+          </div>
         </li>
         {
           arrNunPage.map((element, index) => (
-            <li key={`key-${index}`} className={`page-item ${element === offset ? 'active' : ''}`}>
-              <a onClick={() => changePage(element)} className="pag-block page-link">{element + 1}</a>
+            <li
+              key={`key-${index}`}
+              className={`page-item ${element === offset ? 'active' : ''}`}
+            >
+              <div
+                onClick={() => changePage(element)}
+                className="pag-block page-link"
+              >
+                {element + 1}
+              </div>
             </li>
           ))
         }
         <li className="page-item">
-          <a onClick={() => onClickLastPage()} className="pag-block page-link" aria-label="Next">
+          <div
+            onClick={() => onClickLastPage()}
+            className="pag-block page-link"
+            aria-label="Next"
+          >
             <span aria-hidden="true">&raquo;</span>
-          </a>
+          </div>
         </li>
       </ul>
     </nav>

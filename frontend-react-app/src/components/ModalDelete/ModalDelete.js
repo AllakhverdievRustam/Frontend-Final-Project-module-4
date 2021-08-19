@@ -12,7 +12,7 @@ const ModalDelete = ({ elementDel, setUseEffectDo, isOpen }) => {
           Authorization: authorization
         }
       }
-    ).then(res => {
+    ).then(() => {
       isOpen(false);
       setUseEffectDo(true);
     });

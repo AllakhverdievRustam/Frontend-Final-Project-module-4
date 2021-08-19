@@ -70,7 +70,10 @@ const BodyAuth = () => {
               className="form-control mb-5"
             />
 
-            <button onClick={() => authorization()} className="button-auth btn btn-outline-success">
+            <button
+              onClick={() => authorization()}
+              className="button-auth btn btn-outline-success"
+            >
               Войти
             </button>
 

@@ -23,7 +23,7 @@ const AddBlock = ({ setUseEffectDo }) => {
       {
         headers: { Authorization: authorization }
       }
-    ).then(res => {
+    ).then(() => {
       setName('');
       setDoctor('');
       setDate('');
@@ -96,7 +96,7 @@ const AddBlock = ({ setUseEffectDo }) => {
           Добавить
         </button>
       </div>
-    </div >
+    </div>
   );
 }
 

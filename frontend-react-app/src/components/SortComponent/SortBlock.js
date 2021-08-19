@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './SortBlock.scss';
 
 const SortBlock = ({sortLable, setSortLable, sortDirection, setSortDirection, setUseEffectDo}) => {
