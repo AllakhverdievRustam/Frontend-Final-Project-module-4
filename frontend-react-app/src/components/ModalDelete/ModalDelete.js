@@ -1,20 +1,21 @@
 import React from 'react';
 import axios from 'axios';
 
-const ModalDelete = ({ elementDel, setUseEffectDo, isOpen }) => {
+const ModalDelete = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, elementDel, setReceptions, isOpen }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
-
   const deleteReception = () => {
-    axios.delete(`http://localhost:8000/deleteReception?_id=${elementDel._id}`,
+    axios.delete(`http://localhost:8000/deleteReception?_id=${elementDel._id}&limit=${limit}&offset=${offset}&sortLable=${sortLable}&sortDirection=${sortDirection}&firstDate=${firstDate}&lastDate=${lastDate}`,
       {
         headers: {
           Authorization: authorization
         }
       }
-    ).then(() => {
+    ).then(res => {
       isOpen(false);
-      setUseEffectDo(true);
+      setCountAllReception(res.data.length);
+      const result = res.data.data;
+      setReceptions(result);
     });
   }
 

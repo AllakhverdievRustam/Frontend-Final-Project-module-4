@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddBlock.scss';
 
-const AddBlock = ({ setUseEffectDo }) => {
+const AddBlock = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, setReceptions }) => {
   const [name, setName] = useState('');
   const [doctor, setDoctor] = useState('');
   const [date, setDate] = useState('');
@@ -18,17 +18,25 @@ const AddBlock = ({ setUseEffectDo }) => {
         nameUser: name,
         nameDoctor: doctor,
         date,
-        complaint
+        complaint,
+        limit,
+        offset,
+        sortLable,
+        sortDirection,
+        firstDate,
+        lastDate
       },
       {
         headers: { Authorization: authorization }
       }
-    ).then(() => {
+    ).then(res => {
       setName('');
       setDoctor('');
       setDate('');
       setComplaint('');
-      setUseEffectDo(true);
+      setCountAllReception(res.data.length);
+      const result = res.data.data;
+      setReceptions(result);
     });
   }
 

@@ -5,15 +5,13 @@ import './FilterDate.scss';
 
 const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffectDo }) => {
   const [flagAddFilter, setFlagAddFilter] = useState(false);
+  const [sortLable, setSortLable] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
 
   const onClickDeleteFilter = () => {
     setFlagAddFilter(false);
     setFirstDate('');
     setLastDate('');
-    setUseEffectDo(true);
-  }
-
-  const filterReceptions = () => {
     setUseEffectDo(true);
   }
 
@@ -65,7 +63,7 @@ const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffe
             <button
               type="button"
               className="btn-filter btn btn-outline-dark"
-              onClick={() => filterReceptions()}
+              onClick={() => setUseEffectDo(true)}
             >
               Фильтровать
             </button>

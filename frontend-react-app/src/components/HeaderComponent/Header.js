@@ -1,11 +1,9 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Svg from '../Elements/SvgHeader/SvgHeader';
 import './Header.scss';
 
 const Header = ({ name, flag }) => {
-  const history = useHistory();
-
   return (
     <div className="header w-100">
       <Svg />
@@ -14,13 +12,14 @@ const Header = ({ name, flag }) => {
 
       {
         flag &&
-        <button
-          onClick={() => history.push('/Authorization')}
-          type="button"
-          className="button-header btn btn-outline-dark"
-        >
-          Выход
-        </button>
+        <Link className="button-header" to='/Authorization'>
+          <button
+            type="button"
+            className="btn btn-outline-dark"
+          >
+            Выход
+          </button>
+        </Link>
       }
     </div>
   );

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ModalEdit.scss';
 
-const ModalEdit = ({ elementEd, isOpen, setUseEffectDo }) => {
+const ModalEdit = ({ elementEd, isOpen, lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, setReceptions }) => {
   const [nameEdit, setNameEdit] = useState('');
   const [doctorEdit, setDoctorEdit] = useState('');
   const [dateEdit, setDateEdit] = useState('');
@@ -29,17 +29,25 @@ const ModalEdit = ({ elementEd, isOpen, setUseEffectDo }) => {
         nameDoctor: doctorEdit,
         date: dateEdit,
         complaint: complaintEdit,
+        limit,
+        offset,
+        sortLable,
+        sortDirection,
+        firstDate,
+        lastDate
       },
       {
         headers: { Authorization: authorization }
       }
-    ).then(() => {
+    ).then(res => {
       setNameEdit('');
       setDoctorEdit('');
       setDateEdit('');
       setComplaintEdit('');
-      setUseEffectDo(true);
       isOpen(false);
+      setCountAllReception(res.data.length);
+      const result = res.data.data;
+      setReceptions(result);
     });
   }
 

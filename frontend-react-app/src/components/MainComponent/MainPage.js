@@ -52,7 +52,7 @@ const MainPage = () => {
         setReceptions(result);
       });
     }
-  });
+  }, [useEffectDo]);
 
   const onClickEdit = (element) => {
     setElementRecEdit(element);
@@ -69,7 +69,14 @@ const MainPage = () => {
       <Header name='Приемы' flag={true} />
 
       <AddBlock
-        setUseEffectDo={setUseEffectDo}
+        setReceptions={setReceptions}
+        setCountAllReception={setCountAllReception}
+        limit={limit}
+        offset={offset}
+        sortLable={sortLable}
+        sortDirection={sortDirection}
+        firstDate={firstDate}
+        lastDate={lastDate}
       />
 
       <div className="block-main w-100">
@@ -146,7 +153,14 @@ const MainPage = () => {
         <ModalDelete
           elementDel={elementRecDelete}
           isOpen={setOpentModalDeelete}
-          setUseEffectDo={setUseEffectDo}
+          setReceptions={setReceptions}
+          setCountAllReception={setCountAllReception}
+          limit={limit}
+          offset={offset}
+          sortLable={sortLable}
+          sortDirection={sortDirection}
+          firstDate={firstDate}
+          lastDate={lastDate}
         />
       }
 
@@ -155,7 +169,14 @@ const MainPage = () => {
         <ModalEdit
           elementEd={elementRecEdit}
           isOpen={setOpentModalEdit}
-          setUseEffectDo={setUseEffectDo}
+          setReceptions={setReceptions}
+          setCountAllReception={setCountAllReception}
+          limit={limit}
+          offset={offset}
+          sortLable={sortLable}
+          sortDirection={sortDirection}
+          firstDate={firstDate}
+          lastDate={lastDate}
         />
       }
     </div>
