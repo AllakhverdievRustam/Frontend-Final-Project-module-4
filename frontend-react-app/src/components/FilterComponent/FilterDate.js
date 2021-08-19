@@ -3,38 +3,18 @@ import Svg from '../Elements/SvgAddFilter/SvgAddFilter';
 import imgDelete from '../../source/images/delete.png';
 import './FilterDate.scss';
 
-const FilterDate = ({ receptions, setUseEffectDo, setReceptions, lengthReceptionArr, setLengthReceptionArr }) => {
+const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffectDo }) => {
   const [flagAddFilter, setFlagAddFilter] = useState(false);
-  const [firstDate, setFirstDate] = useState('');
-  const [lastDate, setLastDate] = useState('');
 
-  useEffect(() => {
-    filterReceptions();
-  }, [lengthReceptionArr]);
-
-  const onClickDeleteFilter = async () => {
+  const onClickDeleteFilter = () => {
     setFlagAddFilter(false);
     setFirstDate('');
     setLastDate('');
-    await setUseEffectDo(true);
+    setUseEffectDo(true);
   }
 
   const filterReceptions = () => {
-    if (!lastDate.length && firstDate.length) {
-      receptions = receptions.filter(element => element.date >= firstDate)
-      setReceptions(receptions);
-      setLengthReceptionArr(receptions.length);
-    } else if (!firstDate.length && lastDate.length) {
-      receptions = receptions.filter(element => element.date <= lastDate)
-      setReceptions(receptions);
-      setLengthReceptionArr(receptions.length);
-    } else if (lastDate.length && firstDate.length) {
-      receptions = receptions.filter(element =>
-        (element.date >= firstDate) && (element.date <= lastDate)
-      )
-      setReceptions(receptions);
-      setLengthReceptionArr(receptions.length);
-    }
+    setUseEffectDo(true);
   }
 
   return (

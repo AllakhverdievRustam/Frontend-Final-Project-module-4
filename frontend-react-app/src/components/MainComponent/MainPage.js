@@ -18,9 +18,12 @@ const MainPage = () => {
   const [useEffectDo, setUseEffectDo] = useState(true);
   const [opentModalEdit, setOpentModalEdit] = useState(false);
   const [opentModalDelete, setOpentModalDeelete] = useState(false);
-  const [lengthReceptionArr, setLengthReceptionArr] = useState(0);
   const [offset, setOffset] = useState(0);
   const [limit, setLimit] = useState(5);
+  const [sortLable, setSortLable] = useState("");
+  const [sortDirection, setSortDirection] = useState("");
+  const [firstDate, setFirstDate] = useState("");
+  const [lastDate, setLastDate] = useState("");
   const [countAllReception, setCountAllReception] = useState(0);
   const thLable = ['Имя', 'Врач', 'Дата', 'Жалобы', ''];
 
@@ -29,7 +32,15 @@ const MainPage = () => {
 
   useEffect(() => {
     if (useEffectDo) {
-      axios.get(`http://localhost:8000/getAllReceptions?limit=${limit}&offset=${offset}`,
+      axios.post('http://localhost:8000/getAllReceptions',
+        {
+          limit,
+          offset,
+          sortLable,
+          sortDirection,
+          firstDate,
+          lastDate
+        },
         {
           headers: { Authorization: authorization }
         }
@@ -38,7 +49,6 @@ const MainPage = () => {
         const result = res.data.data;
         setUseEffectDo(false);
         setReceptions(result);
-        setLengthReceptionArr(result.length);
       });
     }
   });
@@ -58,27 +68,24 @@ const MainPage = () => {
       <Header name='Приемы' flag={true} />
 
       <AddBlock
-        setReceptions={setReceptions}
-        setLengthReceptionArr={setLengthReceptionArr}
-        offset={offset}
-        limit={limit}
-        setCountAllReception={setCountAllReception}
+        setUseEffectDo={setUseEffectDo}
       />
 
       <div className="block-main w-100">
         <SortBlock
-          receptions={receptions}
-          setReceptions={setReceptions}
           setUseEffectDo={setUseEffectDo}
-          lengthReceptionArr={lengthReceptionArr}
+          sortLable={sortLable}
+          setSortLable={setSortLable}
+          sortDirection={sortDirection}
+          setSortDirection={setSortDirection}
         />
 
         <FilterDate
-          receptions={receptions}
-          setReceptions={setReceptions}
           setUseEffectDo={setUseEffectDo}
-          lengthReceptionArr={lengthReceptionArr}
-          setLengthReceptionArr={setLengthReceptionArr}
+          firstDate={firstDate}
+          setFirstDate={setFirstDate}
+          lastDate={lastDate}
+          setLastDate={setLastDate}
         />
 
         <table className="table table-striped">
@@ -130,12 +137,8 @@ const MainPage = () => {
         opentModalDelete &&
         <ModalDelete
           elementDel={elementRecDelete}
-          setReceptions={setReceptions}
           isOpen={setOpentModalDeelete}
-          setLengthReceptionArr={setLengthReceptionArr}
-          offset={offset}
-          limit={limit}
-          setCountAllReception={setCountAllReception}
+          setUseEffectDo={setUseEffectDo}
         />
       }
 
@@ -143,11 +146,8 @@ const MainPage = () => {
         opentModalEdit &&
         <ModalEdit
           elementEd={elementRecEdit}
-          setReceptions={setReceptions}
           isOpen={setOpentModalEdit}
-          offset={offset}
-          limit={limit}
-          setCountAllReception={setCountAllReception}
+          setUseEffectDo={setUseEffectDo}
         />
       }
     </div>

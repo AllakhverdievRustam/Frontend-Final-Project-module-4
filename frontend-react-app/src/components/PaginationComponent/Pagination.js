@@ -14,11 +14,21 @@ const Pagination = ({ setOffset, limit, countAllReception, setUseEffectDo, offse
     setUseEffectDo(true);
   }
 
+  const onClickFirstPage = () => {
+    setOffset(0);
+    setUseEffectDo(true);
+  }
+
+  const onClickLastPage = () => {
+    setOffset(arrNunPage[arrNunPage.length - 1]);
+    setUseEffectDo(true);
+  }
+
   return (
     <nav>
       <ul className="pagination">
-        <li class="page-item">
-          <a onClick={() => setOffset(0)} class="pag-block page-link" href="#" aria-label="Previous">
+        <li className="page-item">
+          <a onClick={() => onClickFirstPage()} className="pag-block page-link" aria-label="Previous">
             <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
@@ -29,8 +39,8 @@ const Pagination = ({ setOffset, limit, countAllReception, setUseEffectDo, offse
             </li>
           ))
         }
-        <li class="page-item">
-          <a onClick={() => setOffset(arrNunPage[arrNunPage.length - 1])} class="pag-block page-link" href="#" aria-label="Next">
+        <li className="page-item">
+          <a onClick={() => onClickLastPage()} className="pag-block page-link" aria-label="Next">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
