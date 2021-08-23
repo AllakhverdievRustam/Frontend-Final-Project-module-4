@@ -5,8 +5,6 @@ import './FilterDate.scss';
 
 const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffectDo }) => {
   const [flagAddFilter, setFlagAddFilter] = useState(false);
-  const [sortLable, setSortLable] = useState("");
-  const [sortDirection, setSortDirection] = useState("");
 
   const onClickDeleteFilter = () => {
     setFlagAddFilter(false);
