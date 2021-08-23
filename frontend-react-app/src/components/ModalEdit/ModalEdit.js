@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ModalEdit.scss';
 
-const ModalEdit = ({ elementEd, setReceptions, isOpen, offset, limit, setCountAllReception }) => {
+const ModalEdit = ({ elementEd, isOpen, lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, setReceptions }) => {
   const [nameEdit, setNameEdit] = useState('');
   const [doctorEdit, setDoctorEdit] = useState('');
   const [dateEdit, setDateEdit] = useState('');
@@ -16,7 +16,7 @@ const ModalEdit = ({ elementEd, setReceptions, isOpen, offset, limit, setCountAl
       setDateEdit(elementEd.date);
       setComplaintEdit(elementEd.complaint);
     }
-  }, [elementEd]);
+  }, [elementEd, nameEdit, doctorEdit, dateEdit, complaintEdit]);
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
@@ -30,7 +30,11 @@ const ModalEdit = ({ elementEd, setReceptions, isOpen, offset, limit, setCountAl
         date: dateEdit,
         complaint: complaintEdit,
         limit,
-        offset
+        offset,
+        sortLable,
+        sortDirection,
+        firstDate,
+        lastDate
       },
       {
         headers: { Authorization: authorization }
@@ -40,10 +44,10 @@ const ModalEdit = ({ elementEd, setReceptions, isOpen, offset, limit, setCountAl
       setDoctorEdit('');
       setDateEdit('');
       setComplaintEdit('');
+      isOpen(false);
       setCountAllReception(res.data.length);
       const result = res.data.data;
       setReceptions(result);
-      isOpen(false);
     });
   }
 
@@ -102,7 +106,12 @@ const ModalEdit = ({ elementEd, setReceptions, isOpen, offset, limit, setCountAl
                     {
                       doctorArray.map((element, index) => (
                         element !== doctorEdit &&
-                        <option key={`key-${index}`} value={element}>{element}</option>
+                        <option
+                          key={`key-${index}`}
+                          value={element}
+                        >
+                          {element}
+                        </option>
                       ))
                     }
                   </select>
@@ -129,7 +138,7 @@ const ModalEdit = ({ elementEd, setReceptions, isOpen, offset, limit, setCountAl
                     value={complaintEdit || ''}
                   />
                 </div>
-              </div >
+              </div>
             </div>
             <div className="modal-footer">
               <button

@@ -1,40 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Svg from '../Elements/SvgAddFilter/SvgAddFilter';
 import imgDelete from '../../source/images/delete.png';
 import './FilterDate.scss';
 
-const FilterDate = ({ receptions, setUseEffectDo, setReceptions, lengthReceptionArr, setLengthReceptionArr }) => {
+const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffectDo }) => {
   const [flagAddFilter, setFlagAddFilter] = useState(false);
-  const [firstDate, setFirstDate] = useState('');
-  const [lastDate, setLastDate] = useState('');
 
-  useEffect(() => {
-    filterReceptions();
-  }, [lengthReceptionArr]);
-
-  const onClickDeleteFilter = async () => {
+  const onClickDeleteFilter = () => {
     setFlagAddFilter(false);
     setFirstDate('');
     setLastDate('');
-    await setUseEffectDo(true);
-  }
-
-  const filterReceptions = () => {
-    if (!lastDate.length && firstDate.length) {
-      receptions = receptions.filter(element => element.date >= firstDate)
-      setReceptions(receptions);
-      setLengthReceptionArr(receptions.length);
-    } else if (!firstDate.length && lastDate.length) {
-      receptions = receptions.filter(element => element.date <= lastDate)
-      setReceptions(receptions);
-      setLengthReceptionArr(receptions.length);
-    } else if (lastDate.length && firstDate.length) {
-      receptions = receptions.filter(element =>
-        (element.date >= firstDate) && (element.date <= lastDate)
-      )
-      setReceptions(receptions);
-      setLengthReceptionArr(receptions.length);
-    }
+    setUseEffectDo(true);
   }
 
   return (
@@ -46,9 +22,12 @@ const FilterDate = ({ receptions, setUseEffectDo, setReceptions, lengthReception
               Добавить фильтр по дате:
             </p>
 
-            <a onClick={(e) => setFlagAddFilter(true)}>
+            <div
+              onClick={() => setFlagAddFilter(true)}
+              className="add-filter-button"
+            >
               <Svg />
-            </a>
+            </div>
 
           </div>
           :
@@ -82,7 +61,7 @@ const FilterDate = ({ receptions, setUseEffectDo, setReceptions, lengthReception
             <button
               type="button"
               className="btn-filter btn btn-outline-dark"
-              onClick={() => filterReceptions()}
+              onClick={() => setUseEffectDo(true)}
             >
               Фильтровать
             </button>
@@ -90,6 +69,7 @@ const FilterDate = ({ receptions, setUseEffectDo, setReceptions, lengthReception
             <img
               src={imgDelete}
               onClick={() => onClickDeleteFilter()}
+              alt="delete filter"
             />
           </>
       }

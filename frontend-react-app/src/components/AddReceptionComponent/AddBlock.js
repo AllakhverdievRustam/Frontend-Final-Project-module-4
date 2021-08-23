@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import './AddBlock.scss';
 
-const AddBlock = ({ setReceptions, setLengthReceptionArr, offset, limit, setCountAllReception }) => {
+const AddBlock = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, setReceptions }) => {
   const [name, setName] = useState('');
   const [doctor, setDoctor] = useState('');
   const [date, setDate] = useState('');
@@ -13,14 +13,18 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr, offset, limit, setCoun
     const user = JSON.parse(localStorage.getItem('user'));
     const { authorization } = user;
 
-    axios.post(`http://localhost:8000/createNewReception?limit=${limit}&offset=${offset}`,
+    axios.post('http://localhost:8000/createNewReception',
       {
         nameUser: name,
         nameDoctor: doctor,
         date,
         complaint,
         limit,
-        offset
+        offset,
+        sortLable,
+        sortDirection,
+        firstDate,
+        lastDate
       },
       {
         headers: { Authorization: authorization }
@@ -33,7 +37,6 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr, offset, limit, setCoun
       setCountAllReception(res.data.length);
       const result = res.data.data;
       setReceptions(result);
-      setLengthReceptionArr(result.length);
     });
   }
 
@@ -101,7 +104,7 @@ const AddBlock = ({ setReceptions, setLengthReceptionArr, offset, limit, setCoun
           Добавить
         </button>
       </div>
-    </div >
+    </div>
   );
 }
 

@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './SortBlock.scss';
 
-const SortBlock = ({ receptions, setReceptions, setUseEffectDo, lengthReceptionArr, setLengthReceptionArr }) => {
-  const [sortLable, setSortLable] = useState('');
-  const [sortDirection, setSortDirection] = useState('asc');
+const SortBlock = ({sortLable, setSortLable, sortDirection, setSortDirection, setUseEffectDo}) => {
   const sortArrLable = [
     { lable: 'None', value: '' },
     { lable: 'Имя', value: 'nameUser' },
@@ -15,29 +13,13 @@ const SortBlock = ({ receptions, setReceptions, setUseEffectDo, lengthReceptionA
     { value: 'desc', title: 'По убыванию' }
   ];
 
-  useEffect(() => {
-    if (sortLable) {
-      switch (sortDirection) {
-        case 'asc':
-          receptions.sort((a, b) => a[sortLable] < b[sortLable] ? -1 : a[sortLable] > b[sortLable] ? 1 : 0);
-          setReceptions([...receptions]);
-          break;
-
-        case 'desc':
-          receptions.sort((a, b) => a[sortLable] > b[sortLable] ? -1 : a[sortLable] < b[sortLable] ? 1 : 0);
-          setReceptions([...receptions]);
-          break;
-
-        default:
-          break;
-      }
-    }
-  }, [lengthReceptionArr, sortDirection, sortLable]);
-
   const onChangeLable = (e) => {
+    setSortDirection('asc');
     const result = e.target.value;
-    if (result) {
+    if (!result) {
       setSortLable(result);
+      setSortDirection('');
+      setUseEffectDo(true);
     } else {
       setSortLable(result);
       setUseEffectDo(true);
@@ -46,6 +28,7 @@ const SortBlock = ({ receptions, setReceptions, setUseEffectDo, lengthReceptionA
 
   const onChangeDirection = (e) => {
     setSortDirection(e.target.value);
+    setUseEffectDo(true);
   }
 
   return (

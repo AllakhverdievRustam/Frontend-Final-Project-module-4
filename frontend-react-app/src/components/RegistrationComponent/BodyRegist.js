@@ -75,7 +75,10 @@ const BodyRegist = () => {
               className="form-control mb-4"
             />
 
-            <button onClick={() => registration()} className="button-regist btn btn-outline-success">
+            <button
+              onClick={() => registration()}
+              className="button-regist btn btn-outline-success"
+            >
               Зарегистрироваться
             </button>
 
