@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import Svg from '../Elements/SvgAddFilter/SvgAddFilter';
 import imgDelete from '../../source/images/delete.png';
 import './FilterDate.scss';
 
-const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffectDo }) => {
+const FilterDate = ({ setFirstDate, setLastDate, setUseEffectDo, Filter }) => {
   const [flagAddFilter, setFlagAddFilter] = useState(false);
 
   const onClickDeleteFilter = () => {
@@ -41,7 +42,7 @@ const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffe
                 onChange={(e) => setFirstDate(e.target.value)}
                 type="date"
                 className="form-control"
-                value={firstDate}
+                value={Filter.firstDate}
               />
             </div>
 
@@ -54,7 +55,7 @@ const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffe
                 onChange={(e) => setLastDate(e.target.value)}
                 type="date"
                 className="form-control"
-                value={lastDate}
+                value={Filter.lastDate}
               />
             </div>
 
@@ -77,4 +78,19 @@ const FilterDate = ({ firstDate, setFirstDate, lastDate, setLastDate, setUseEffe
   );
 }
 
-export default FilterDate;
+export default connect(
+  state => ({
+    Filter: state.Filter
+  }),
+  dispatch => ({
+    setUseEffectDo: (value) => {
+      dispatch({ type: 'USE-EFF-DO', payload: value });
+    },
+    setFirstDate: (value) => {
+      dispatch({ type: 'FIRST-DATE', payload: value });
+    },
+    setLastDate: (value) => {
+      dispatch({ type: 'LAST-DATE', payload: value });
+    }
+  })
+)(FilterDate);

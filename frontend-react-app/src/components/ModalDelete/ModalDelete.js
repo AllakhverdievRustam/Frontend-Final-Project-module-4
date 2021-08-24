@@ -1,26 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
-const ModalDelete = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, elementDel, setReceptions, isOpen }) => {
+const ModalDelete = ({ Offset, limit, setCountAllReception, ElementRecToModal, setReception, openModalDelete, Sort, Filter }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
+
   const deleteReception = () => {
-    axios.delete(`http://localhost:8000/deleteReception?_id=${elementDel._id}&limit=${limit}&offset=${offset}&sortLable=${sortLable}&sortDirection=${sortDirection}&firstDate=${firstDate}&lastDate=${lastDate}`,
+    axios.delete(`http://localhost:8000/deleteReception?_id=${ElementRecToModal.delete._id}&limit=${limit}&offset=${Offset}&sortLable=${Sort.lable}&sortDirection=${Sort.direction}&firstDate=${Filter.firstDate}&lastDate=${Filter.lastDate}`,
       {
         headers: {
           Authorization: authorization
         }
       }
     ).then(res => {
-      isOpen(false);
+      openModalDelete(false);
       setCountAllReception(res.data.length);
       const result = res.data.data;
-      setReceptions(result);
+      setReception(result);
     });
   }
 
   const onClickCancel = () => {
-    isOpen(false);
+    openModalDelete(false);
   }
 
   return (
@@ -66,4 +68,22 @@ const ModalDelete = ({ lastDate, firstDate, sortDirection, sortLable, offset, li
   );
 }
 
-export default ModalDelete;
+export default connect(
+  state => ({
+    Offset: state.Offset,
+    ElementRecToModal: state.ElementRecToModal,
+    Sort: state.Sort,
+    Filter: state.Filter
+  }),
+  dispatch => ({
+    setCountAllReception: (value) => {
+      dispatch({ type: 'COUNT-ALL-REC', payload: value });
+    },
+    setReception: (value) => {
+      dispatch({ type: 'GET-RECEPTIONS', payload: value });
+    },
+    openModalDelete: (value) => {
+      dispatch({ type: 'OPEN-DELETE', payload: value });
+    }
+  })
+)(ModalDelete);

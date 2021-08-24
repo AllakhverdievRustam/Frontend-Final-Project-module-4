@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import ModalDelete from '../ModalDelete/ModalDelete';
 import ModalEdit from '../ModalEdit/ModalEdit';
@@ -11,19 +12,7 @@ import imgEdit from '../../source/images/edit.png';
 import imgDelete from '../../source/images/delete.png';
 import './MainPage.scss';
 
-const MainPage = () => {
-  const [receptions, setReceptions] = useState([]);
-  const [elementRecEdit, setElementRecEdit] = useState({});
-  const [elementRecDelete, setElementRecDelete] = useState({});
-  const [useEffectDo, setUseEffectDo] = useState(true);
-  const [opentModalEdit, setOpentModalEdit] = useState(false);
-  const [opentModalDelete, setOpentModalDeelete] = useState(false);
-  const [offset, setOffset] = useState(0);
-  const [sortLable, setSortLable] = useState("");
-  const [sortDirection, setSortDirection] = useState("");
-  const [firstDate, setFirstDate] = useState("");
-  const [lastDate, setLastDate] = useState("");
-  const [countAllReception, setCountAllReception] = useState(0);
+const MainPage = ({ Offset, setCountAllReception, UseEffectDo, setUseEffectDo, Reception, setReception, OpenModal, openModalDelete, openModalEdit, sendElemRecToDelete, sendElemRecToEdit, Sort, Filter }) => {
   const thLable = ['Имя', 'Врач', 'Дата', 'Жалобы', ''];
 
   const limit = 5;
@@ -32,15 +21,15 @@ const MainPage = () => {
   const { authorization } = user;
 
   useEffect(() => {
-    if (useEffectDo) {
+    if (UseEffectDo) {
       axios.post('http://localhost:8000/getAllReceptions',
         {
           limit,
-          offset,
-          sortLable,
-          sortDirection,
-          firstDate,
-          lastDate
+          offset: Offset,
+          sortLable: Sort.lable,
+          sortDirection: Sort.direction,
+          firstDate: Filter.firstDate,
+          lastDate: Filter.lastDate
         },
         {
           headers: { Authorization: authorization }
@@ -49,19 +38,19 @@ const MainPage = () => {
         setCountAllReception(res.data.length);
         const result = res.data.data;
         setUseEffectDo(false);
-        setReceptions(result);
+        setReception(result);
       });
     }
-  }, [useEffectDo]);
+  }, [UseEffectDo]);
 
   const onClickEdit = (element) => {
-    setElementRecEdit(element);
-    setOpentModalEdit(true);
+    sendElemRecToEdit(element);
+    openModalEdit(true);
   }
 
   const onClickDelete = (element) => {
-    setElementRecDelete(element);
-    setOpentModalDeelete(true);
+    sendElemRecToDelete(element);
+    openModalDelete(true);
   }
 
   return (
@@ -69,32 +58,13 @@ const MainPage = () => {
       <Header name='Приемы' flag={true} />
 
       <AddBlock
-        setReceptions={setReceptions}
-        setCountAllReception={setCountAllReception}
         limit={limit}
-        offset={offset}
-        sortLable={sortLable}
-        sortDirection={sortDirection}
-        firstDate={firstDate}
-        lastDate={lastDate}
       />
 
       <div className="block-main w-100">
-        <SortBlock
-          setUseEffectDo={setUseEffectDo}
-          sortLable={sortLable}
-          setSortLable={setSortLable}
-          sortDirection={sortDirection}
-          setSortDirection={setSortDirection}
-        />
+        <SortBlock />
 
-        <FilterDate
-          setUseEffectDo={setUseEffectDo}
-          firstDate={firstDate}
-          setFirstDate={setFirstDate}
-          lastDate={lastDate}
-          setLastDate={setLastDate}
-        />
+        <FilterDate />
 
         <table className="table table-striped">
           <thead>
@@ -113,7 +83,7 @@ const MainPage = () => {
           </thead>
           <tbody>
             {
-              receptions.map((element, index) => (
+              Reception.map((element, index) => (
                 <tr key={`key-${index}`}>
                   <td className="text-break">{element.nameUser}</td>
                   <td>{element.nameDoctor}</td>
@@ -140,47 +110,57 @@ const MainPage = () => {
         </table>
 
         <Pagination
-          setOffset={setOffset}
           limit={limit}
-          countAllReception={countAllReception}
-          setUseEffectDo={setUseEffectDo}
-          offset={offset}
         />
       </div>
 
       {
-        opentModalDelete &&
+        OpenModal.modalDelete &&
         <ModalDelete
-          elementDel={elementRecDelete}
-          isOpen={setOpentModalDeelete}
-          setReceptions={setReceptions}
-          setCountAllReception={setCountAllReception}
           limit={limit}
-          offset={offset}
-          sortLable={sortLable}
-          sortDirection={sortDirection}
-          firstDate={firstDate}
-          lastDate={lastDate}
         />
       }
 
       {
-        opentModalEdit &&
+        OpenModal.modalEdit &&
         <ModalEdit
-          elementEd={elementRecEdit}
-          isOpen={setOpentModalEdit}
-          setReceptions={setReceptions}
-          setCountAllReception={setCountAllReception}
           limit={limit}
-          offset={offset}
-          sortLable={sortLable}
-          sortDirection={sortDirection}
-          firstDate={firstDate}
-          lastDate={lastDate}
         />
       }
     </div>
   );
 }
 
-export default MainPage;
+export default connect(
+  state => ({
+    Offset: state.Offset,
+    UseEffectDo: state.UseEffectDo,
+    Reception: state.Reception,
+    OpenModal: state.OpenModal,
+    Sort: state.Sort,
+    Filter: state.Filter
+  }),
+  dispatch => ({
+    setCountAllReception: (value) => {
+      dispatch({ type: 'COUNT-ALL-REC', payload: value });
+    },
+    setUseEffectDo: (value) => {
+      dispatch({ type: 'USE-EFF-DO', payload: value });
+    },
+    setReception: (value) => {
+      dispatch({ type: 'GET-RECEPTIONS', payload: value });
+    },
+    openModalDelete: (value) => {
+      dispatch({ type: 'OPEN-DELETE', payload: value });
+    },
+    openModalEdit: (value) => {
+      dispatch({ type: 'OPEN-EDIT', payload: value });
+    },
+    sendElemRecToDelete: (value) => {
+      dispatch({ type: 'ELEMENT-TO-DELETE', payload: value });
+    },
+    sendElemRecToEdit: (value) => {
+      dispatch({ type: 'ELEMENT-TO-EDIT', payload: value });
+    }
+  })
+)(MainPage);
