@@ -1,43 +1,50 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Header from '../HeaderComponent/Header';
 import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyAuth.scss';
 
-const BodyAuth = () => {
+const BodyAuth = ({ Error, setError }) => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
-  const [errorInput, setErrorInput] = useState('');
 
   const history = useHistory();
 
   const authorization = () => {
-    if (loginInput.length < 6) return setErrorInput('Введите более 6 символов в поле логина!');
-    if (passwordInput.length < 6) return setErrorInput('Введите более 6 символов в поле пароля!');
+    if (loginInput.length < 6) return setError('Введите более 6 символов в поле логина!');
+    if (passwordInput.length < 6) return setError('Введите более 6 символов в поле пароля!');
 
     if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(passwordInput)) {
       axios.post('http://localhost:8000/authorizationUser', {
         login: loginInput,
         password: passwordInput
       }).then(res => {
-        setErrorInput('');
+        setError('');
         localStorage.setItem('user', JSON.stringify(res.data));
         history.push('/MainPage');
       }).catch((err) => {
         switch (err.response.status) {
           case 420:
-            return setErrorInput('Пользователь не найден!');
+            return setError('Пользователь не найден!');
           case 421:
-            return setErrorInput('Не верный пароль!');
+            return setError('Не верный пароль!');
           default:
             break;
         }
       });
     } else {
-      return setErrorInput('Используйте латинские буквы и хотя бы одно число в пароле!');
+      return setError('Используйте латинские буквы и хотя бы одно число в пароле!');
     }
   }
+
+  const onClickSwitch = () => {
+    setError('');
+    setLoginInput('');
+    setPasswordInput('');
+  }
+
 
   return (
     <>
@@ -78,11 +85,11 @@ const BodyAuth = () => {
             </button>
 
             {
-              errorInput && <span>{errorInput}</span>
+              Error && <span>{Error}</span>
             }
           </div>
 
-          <Link className="trans-auth" to='/Registration'>
+          <Link onClick={() => onClickSwitch()} className="trans-auth" to='/Registration'>
             <p className="p-auth">Зарегистрироваться</p>
           </Link>
         </div>
@@ -91,4 +98,13 @@ const BodyAuth = () => {
   );
 }
 
-export default BodyAuth;
+export default connect(
+  state => ({
+    Error: state.Error
+  }),
+  dispatch => ({
+    setError: (value) => {
+      dispatch({ type: 'ERROR', payload: value });
+    }
+  })
+)(BodyAuth);

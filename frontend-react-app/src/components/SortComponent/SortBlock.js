@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './SortBlock.scss';
 
-const SortBlock = ({sortLable, setSortLable, sortDirection, setSortDirection, setUseEffectDo}) => {
+const SortBlock = ({ setUseEffectDo, Sort, setSortLable, setSortDirection }) => {
   const sortArrLable = [
     { lable: 'None', value: '' },
     { lable: 'Имя', value: 'nameUser' },
@@ -41,7 +42,7 @@ const SortBlock = ({sortLable, setSortLable, sortDirection, setSortDirection, se
         onChange={(e) => onChangeLable(e)}
         className="sort-input form-select"
         id="inputGroupSelect01"
-        value={sortLable}
+        value={Sort.lable}
       >
         {
           sortArrLable.map((element, index) => (
@@ -56,7 +57,7 @@ const SortBlock = ({sortLable, setSortLable, sortDirection, setSortDirection, se
       </select>
 
       {
-        sortLable &&
+        Sort.lable &&
         <>
           <p>
             Направление:
@@ -66,7 +67,7 @@ const SortBlock = ({sortLable, setSortLable, sortDirection, setSortDirection, se
             onChange={(e) => onChangeDirection(e)}
             className="sort-input form-select"
             id="inputGroupSelect01"
-            value={sortDirection}
+            value={Sort.direction}
           >
 
             {
@@ -86,4 +87,19 @@ const SortBlock = ({sortLable, setSortLable, sortDirection, setSortDirection, se
   );
 }
 
-export default SortBlock;
+export default connect(
+  state => ({
+    Sort: state.Sort
+  }),
+  dispatch => ({
+    setUseEffectDo: (value) => {
+      dispatch({ type: 'USE-EFF-DO', payload: value });
+    },
+    setSortLable: (value) => {
+      dispatch({ type: 'CHANGE-LABLE', payload: value });
+    },
+    setSortDirection: (value) => {
+      dispatch({ type: 'CHANGE-DIRECTION', payload: value });
+    }
+  })
+)(SortBlock);

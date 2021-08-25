@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import './Pagination.scss';
 
-const Pagination = ({ setOffset, limit, countAllReception, setUseEffectDo, offset }) => {
-  const countPages = Math.ceil(countAllReception / limit);
+const Pagination = ({ setOffset, limit, CountAllReception, setUseEffectDo, Offset }) => {
+  const countPages = Math.ceil(CountAllReception / limit);
 
   const arrNunPage = [];
   for (let i = 0; i < countPages; i++) {
@@ -40,7 +41,7 @@ const Pagination = ({ setOffset, limit, countAllReception, setUseEffectDo, offse
           arrNunPage.map((element, index) => (
             <li
               key={`key-${index}`}
-              className={`page-item ${element === offset ? 'active' : ''}`}
+              className={`page-item ${element === Offset ? 'active' : ''}`}
             >
               <div
                 onClick={() => changePage(element)}
@@ -65,4 +66,17 @@ const Pagination = ({ setOffset, limit, countAllReception, setUseEffectDo, offse
   );
 }
 
-export default Pagination;
+export default connect(
+  state => ({
+    Offset: state.Offset,
+    CountAllReception: state.CountAllReception
+  }),
+  dispatch => ({
+    setOffset: (value) => {
+      dispatch({ type: 'OFFSET', payload: value });
+    },
+    setUseEffectDo: (value) => {
+      dispatch({ type: 'USE-EFF-DO', payload: value });
+    }
+  })
+)(Pagination);

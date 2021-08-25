@@ -1,38 +1,45 @@
 import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Header from '../HeaderComponent/Header';
 import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyRegist.scss';
 
-const BodyRegist = () => {
+const BodyRegist = ({ Error, setError }) => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordRepeatInput, setPasswordRepeatInput] = useState('');
-  const [errorInput, setErrorInput] = useState('');
 
   const history = useHistory();
 
   const registration = () => {
-    if (loginInput.length < 6) return setErrorInput('Введите более 6 символов в поле логина!');
-    if (passwordInput.length < 6) return setErrorInput('Введите более 6 символов в поле пароля!');
+    if (loginInput.length < 6) return setError('Введите более 6 символов в поле логина!');
+    if (passwordInput.length < 6) return setError('Введите более 6 символов в поле пароля!');
 
     if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(passwordInput)) {
-      if (passwordInput !== passwordRepeatInput) return setErrorInput('Пароли не совпадают!');
+      if (passwordInput !== passwordRepeatInput) return setError('Пароли не совпадают!');
 
       axios.post('http://localhost:8000/registrationUser', {
         login: loginInput,
         password: passwordRepeatInput
       }).then(res => {
-        setErrorInput('');
+        setError('');
         localStorage.setItem('user', JSON.stringify(res.data));
         history.push('/MainPage');
       }).catch((err) => {
-        if (err.response.status === 421) return setErrorInput('Пользователь уже существует в системе!');
+        if (err.response.status === 421) return setError('Пользователь уже существует в системе!');
       });
     } else {
-      return setErrorInput('Используйте латинские буквы и хотя бы одно число в пароле!');
+      return setError('Используйте латинские буквы и хотя бы одно число в пароле!');
     }
+  }
+
+  const onClickSwitch = () => {
+    setError('');
+    setLoginInput('');
+    setPasswordInput('');
+    setPasswordRepeatInput('');
   }
 
   return (
@@ -83,11 +90,11 @@ const BodyRegist = () => {
             </button>
 
             {
-              errorInput && <span>{errorInput}</span>
+              Error && <span>{Error}</span>
             }
           </div>
 
-          <Link className="trans-regist" to='/Authorization'>
+          <Link onClick={() => onClickSwitch()} className="trans-regist" to='/Authorization'>
             <p className="p-regist"> Авторизоваться </p>
           </Link>
         </div>
@@ -96,4 +103,13 @@ const BodyRegist = () => {
   );
 }
 
-export default BodyRegist;
+export default connect(
+  state => ({
+    Error: state.Error
+  }),
+  dispatch => ({
+    setError: (value) => {
+      dispatch({ type: 'ERROR', payload: value });
+    }
+  })
+)(BodyRegist);

@@ -1,22 +1,42 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import './ModalEdit.scss';
 
-const ModalEdit = ({ elementEd, isOpen, lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, setReceptions }) => {
+const ModalEdit = ({
+  ElementRecToModal,
+  openModalEdit,
+  Offset,
+  limit,
+  setCountAllReception,
+  setReception,
+  Sort,
+  Filter }) => {
   const [nameEdit, setNameEdit] = useState('');
   const [doctorEdit, setDoctorEdit] = useState('');
   const [dateEdit, setDateEdit] = useState('');
   const [complaintEdit, setComplaintEdit] = useState('');
   const doctorArray = ['Doctor 1', 'Doctor 2', 'Doctor 3', 'Doctor 4', 'Doctor 5'];
 
+  const { nameUser, nameDoctor, date, complaint, _id } = ElementRecToModal.edit;
+
   useEffect(() => {
     if (!nameEdit && !doctorEdit && !dateEdit && !complaintEdit) {
-      setNameEdit(elementEd.nameUser);
-      setDoctorEdit(elementEd.nameDoctor);
-      setDateEdit(elementEd.date);
-      setComplaintEdit(elementEd.complaint);
+      setNameEdit(nameUser);
+      setDoctorEdit(nameDoctor);
+      setDateEdit(date);
+      setComplaintEdit(complaint);
     }
-  }, [elementEd, nameEdit, doctorEdit, dateEdit, complaintEdit]);
+  }, [ElementRecToModal,
+    nameEdit,
+    doctorEdit,
+    dateEdit,
+    complaintEdit,
+    nameUser,
+    nameDoctor,
+    date,
+    complaint,
+    _id]);
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
@@ -24,17 +44,17 @@ const ModalEdit = ({ elementEd, isOpen, lastDate, firstDate, sortDirection, sort
   const editReception = () => {
     axios.patch('http://localhost:8000/editReception',
       {
-        _id: elementEd._id,
+        _id,
         nameUser: nameEdit,
         nameDoctor: doctorEdit,
         date: dateEdit,
         complaint: complaintEdit,
         limit,
-        offset,
-        sortLable,
-        sortDirection,
-        firstDate,
-        lastDate
+        offset: Offset,
+        sortLable: Sort.lable,
+        sortDirection: Sort.direction,
+        firstDate: Filter.firstDate,
+        lastDate: Filter.lastDate
       },
       {
         headers: { Authorization: authorization }
@@ -44,10 +64,10 @@ const ModalEdit = ({ elementEd, isOpen, lastDate, firstDate, sortDirection, sort
       setDoctorEdit('');
       setDateEdit('');
       setComplaintEdit('');
-      isOpen(false);
+      openModalEdit(false);
       setCountAllReception(res.data.length);
       const result = res.data.data;
-      setReceptions(result);
+      setReception(result);
     });
   }
 
@@ -56,7 +76,7 @@ const ModalEdit = ({ elementEd, isOpen, lastDate, firstDate, sortDirection, sort
     setDoctorEdit('');
     setDateEdit('');
     setComplaintEdit('');
-    isOpen(false);
+    openModalEdit(false);
   }
 
   const disabledButtonEdit = !(nameEdit && doctorEdit && dateEdit && complaintEdit);
@@ -165,4 +185,22 @@ const ModalEdit = ({ elementEd, isOpen, lastDate, firstDate, sortDirection, sort
   );
 }
 
-export default ModalEdit;
+export default connect(
+  state => ({
+    Offset: state.Offset,
+    ElementRecToModal: state.ElementRecToModal,
+    Sort: state.Sort,
+    Filter: state.Filter
+  }),
+  dispatch => ({
+    setCountAllReception: (value) => {
+      dispatch({ type: 'COUNT-ALL-REC', payload: value });
+    },
+    setReception: (value) => {
+      dispatch({ type: 'GET-RECEPTIONS', payload: value });
+    },
+    openModalEdit: (value) => {
+      dispatch({ type: 'OPEN-EDIT', payload: value });
+    }
+  })
+)(ModalEdit);

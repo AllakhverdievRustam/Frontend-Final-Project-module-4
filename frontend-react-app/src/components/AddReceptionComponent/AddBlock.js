@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import './AddBlock.scss';
 
-const AddBlock = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit, setCountAllReception, setReceptions }) => {
+const AddBlock = ({ Offset, limit, setCountAllReception, setReception, Sort, Filter }) => {
   const [name, setName] = useState('');
   const [doctor, setDoctor] = useState('');
   const [date, setDate] = useState('');
@@ -20,11 +21,11 @@ const AddBlock = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit
         date,
         complaint,
         limit,
-        offset,
-        sortLable,
-        sortDirection,
-        firstDate,
-        lastDate
+        offset: Offset,
+        sortLable: Sort.lable,
+        sortDirection: Sort.direction,
+        firstDate: Filter.firstDate,
+        lastDate: Filter.lastDate
       },
       {
         headers: { Authorization: authorization }
@@ -36,7 +37,7 @@ const AddBlock = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit
       setComplaint('');
       setCountAllReception(res.data.length);
       const result = res.data.data;
-      setReceptions(result);
+      setReception(result);
     });
   }
 
@@ -108,4 +109,18 @@ const AddBlock = ({ lastDate, firstDate, sortDirection, sortLable, offset, limit
   );
 }
 
-export default AddBlock;
+export default connect(
+  state => ({
+    Offset: state.Offset,
+    Sort: state.Sort,
+    Filter: state.Filter
+  }),
+  dispatch => ({
+    setCountAllReception: (value) => {
+      dispatch({ type: 'COUNT-ALL-REC', payload: value });
+    },
+    setReception: (value) => {
+      dispatch({ type: 'GET-RECEPTIONS', payload: value });
+    }
+  })
+)(AddBlock);
