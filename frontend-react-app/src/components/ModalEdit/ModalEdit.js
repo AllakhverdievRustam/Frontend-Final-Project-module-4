@@ -3,21 +3,40 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import './ModalEdit.scss';
 
-const ModalEdit = ({ ElementRecToModal, openModalEdit, Offset, limit, setCountAllReception, setReception, Sort, Filter }) => {
+const ModalEdit = ({
+  ElementRecToModal,
+  openModalEdit,
+  Offset,
+  limit,
+  setCountAllReception,
+  setReception,
+  Sort,
+  Filter }) => {
   const [nameEdit, setNameEdit] = useState('');
   const [doctorEdit, setDoctorEdit] = useState('');
   const [dateEdit, setDateEdit] = useState('');
   const [complaintEdit, setComplaintEdit] = useState('');
   const doctorArray = ['Doctor 1', 'Doctor 2', 'Doctor 3', 'Doctor 4', 'Doctor 5'];
 
+  const { nameUser, nameDoctor, date, complaint, _id } = ElementRecToModal.edit;
+
   useEffect(() => {
     if (!nameEdit && !doctorEdit && !dateEdit && !complaintEdit) {
-      setNameEdit(ElementRecToModal.edit.nameUser);
-      setDoctorEdit(ElementRecToModal.edit.nameDoctor);
-      setDateEdit(ElementRecToModal.edit.date);
-      setComplaintEdit(ElementRecToModal.edit.complaint);
+      setNameEdit(nameUser);
+      setDoctorEdit(nameDoctor);
+      setDateEdit(date);
+      setComplaintEdit(complaint);
     }
-  }, [ElementRecToModal, nameEdit, doctorEdit, dateEdit, complaintEdit]);
+  }, [ElementRecToModal,
+    nameEdit,
+    doctorEdit,
+    dateEdit,
+    complaintEdit,
+    nameUser,
+    nameDoctor,
+    date,
+    complaint,
+    _id]);
 
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
@@ -25,7 +44,7 @@ const ModalEdit = ({ ElementRecToModal, openModalEdit, Offset, limit, setCountAl
   const editReception = () => {
     axios.patch('http://localhost:8000/editReception',
       {
-        _id: ElementRecToModal.edit._id,
+        _id,
         nameUser: nameEdit,
         nameDoctor: doctorEdit,
         date: dateEdit,

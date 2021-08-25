@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -6,17 +6,20 @@ import Header from '../HeaderComponent/Header';
 import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyAuth.scss';
 
-const BodyAuth = ({ Error, setError, Authorization, setAuthPassInput, setAuthLoginInput }) => {
+const BodyAuth = ({ Error, setError }) => {
+  const [loginInput, setLoginInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+
   const history = useHistory();
 
   const authorization = () => {
-    if (Authorization.login.length < 6) return setError('Введите более 6 символов в поле логина!');
-    if (Authorization.password.length < 6) return setError('Введите более 6 символов в поле пароля!');
+    if (loginInput.length < 6) return setError('Введите более 6 символов в поле логина!');
+    if (passwordInput.length < 6) return setError('Введите более 6 символов в поле пароля!');
 
-    if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(Authorization.password)) {
+    if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(passwordInput)) {
       axios.post('http://localhost:8000/authorizationUser', {
-        login: Authorization.login,
-        password: Authorization.password
+        login: loginInput,
+        password: passwordInput
       }).then(res => {
         setError('');
         localStorage.setItem('user', JSON.stringify(res.data));
@@ -38,8 +41,8 @@ const BodyAuth = ({ Error, setError, Authorization, setAuthPassInput, setAuthLog
 
   const onClickSwitch = () => {
     setError('');
-    setAuthPassInput('');
-    setAuthLoginInput('');
+    setLoginInput('');
+    setPasswordInput('');
   }
 
 
@@ -58,7 +61,7 @@ const BodyAuth = ({ Error, setError, Authorization, setAuthPassInput, setAuthLog
           <div className="auth-form mb-3">
             <label className="mb-1">login:</label>
             <input
-              onChange={(e) => setAuthLoginInput(e.target.value)}
+              onChange={(e) => setLoginInput(e.target.value)}
               type="text"
               placeholder="login"
               name="login-name"
@@ -67,7 +70,7 @@ const BodyAuth = ({ Error, setError, Authorization, setAuthPassInput, setAuthLog
 
             <label className="mb-1">Password:</label>
             <input
-              onChange={(e) => setAuthPassInput(e.target.value)}
+              onChange={(e) => setPasswordInput(e.target.value)}
               type="text"
               placeholder="Password"
               name="password-name"
@@ -97,18 +100,11 @@ const BodyAuth = ({ Error, setError, Authorization, setAuthPassInput, setAuthLog
 
 export default connect(
   state => ({
-    Error: state.Error,
-    Authorization: state.Authorization
+    Error: state.Error
   }),
   dispatch => ({
     setError: (value) => {
       dispatch({ type: 'ERROR', payload: value });
-    },
-    setAuthPassInput: (value) => {
-      dispatch({ type: 'AUTH-PASS', payload: value });
-    },
-    setAuthLoginInput: (value) => {
-      dispatch({ type: 'AUTH-LOGIN', payload: value });
     }
   })
 )(BodyAuth);

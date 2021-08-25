@@ -4,16 +4,21 @@ const obj = {
 };
 
 const OpenModal = (state = obj, action) => {
-  if (action.type === 'OPEN-DELETE') {
-    return {
-      ...state,
-      modalDelete: action.payload
-    };
-  } else if (action.type === 'OPEN-EDIT') {
-    return {
-      ...state,
-      modalEdit: action.payload
-    };
+  switch (action.type) {
+    case 'OPEN-DELETE':
+      return {
+        ...state,
+        modalDelete: action.payload
+      };
+
+    case 'OPEN-EDIT':
+      return {
+        ...state,
+        modalEdit: action.payload
+      };
+
+    default:
+      break;
   }
 
   return state;

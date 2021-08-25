@@ -4,16 +4,21 @@ const obj = {
 };
 
 const Sort = (state = obj, action) => {
-  if (action.type === 'CHANGE-LABLE') {
-    return {
-      ...state,
-      lable: action.payload
-    };
-  } else if (action.type === 'CHANGE-DIRECTION') {
-    return {
-      ...state,
-      direction: action.payload
-    };
+  switch (action.type) {
+    case 'CHANGE-LABLE':
+      return {
+        ...state,
+        lable: action.payload
+      };
+
+    case 'CHANGE-DIRECTION':
+      return {
+        ...state,
+        direction: action.payload
+      };
+
+    default:
+      break;
   }
 
   return state;

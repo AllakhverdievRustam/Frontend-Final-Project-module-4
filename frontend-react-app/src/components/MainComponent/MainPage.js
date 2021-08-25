@@ -12,8 +12,24 @@ import imgEdit from '../../source/images/edit.png';
 import imgDelete from '../../source/images/delete.png';
 import './MainPage.scss';
 
-const MainPage = ({ Offset, setCountAllReception, UseEffectDo, setUseEffectDo, Reception, setReception, OpenModal, openModalDelete, openModalEdit, sendElemRecToDelete, sendElemRecToEdit, Sort, Filter }) => {
+const MainPage = ({
+  Offset,
+  setCountAllReception,
+  UseEffectDo,
+  setUseEffectDo,
+  Reception,
+  setReception,
+  OpenModal,
+  openModalDelete,
+  openModalEdit,
+  sendElemRecToDelete,
+  sendElemRecToEdit,
+  Sort,
+  Filter }) => {
   const thLable = ['Имя', 'Врач', 'Дата', 'Жалобы', ''];
+
+  const { lable, direction } = Sort;
+  const { firstDate, lastDate } = Filter;
 
   const limit = 5;
 
@@ -26,10 +42,10 @@ const MainPage = ({ Offset, setCountAllReception, UseEffectDo, setUseEffectDo, R
         {
           limit,
           offset: Offset,
-          sortLable: Sort.lable,
-          sortDirection: Sort.direction,
-          firstDate: Filter.firstDate,
-          lastDate: Filter.lastDate
+          sortLable: lable,
+          sortDirection: direction,
+          firstDate: firstDate,
+          lastDate: lastDate
         },
         {
           headers: { Authorization: authorization }
@@ -41,7 +57,16 @@ const MainPage = ({ Offset, setCountAllReception, UseEffectDo, setUseEffectDo, R
         setReception(result);
       });
     }
-  }, [UseEffectDo]);
+  }, [UseEffectDo,
+    Offset,
+    lable,
+    direction,
+    firstDate,
+    lastDate,
+    authorization,
+    setCountAllReception,
+    setUseEffectDo,
+    setReception]);
 
   const onClickEdit = (element) => {
     sendElemRecToEdit(element);

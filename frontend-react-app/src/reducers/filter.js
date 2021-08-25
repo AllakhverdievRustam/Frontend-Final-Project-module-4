@@ -4,16 +4,21 @@ const obj = {
 };
 
 const Filter = (state = obj, action) => {
-  if (action.type === 'FIRST-DATE') {
-    return {
-      ...state,
-      firstDate: action.payload
-    };
-  } else if (action.type === 'LAST-DATE') {
-    return {
-      ...state,
-      lastDate: action.payload
-    };
+  switch (action.type) {
+    case 'FIRST-DATE':
+      return {
+        ...state,
+        firstDate: action.payload
+      };
+
+    case 'LAST-DATE':
+      return {
+        ...state,
+        lastDate: action.payload
+      };
+
+    default:
+      break;
   }
 
   return state;

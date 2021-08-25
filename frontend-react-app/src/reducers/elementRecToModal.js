@@ -4,16 +4,21 @@ const obj = {
 };
 
 const ElementRecToModal = (state = obj, action) => {
-  if (action.type === 'ELEMENT-TO-EDIT') {
-    return {
-      ...state,
-      edit: action.payload
-    };
-  } else if (action.type === 'ELEMENT-TO-DELETE') {
-    return {
-      ...state,
-      delete: action.payload
-    };
+  switch (action.type) {
+    case 'ELEMENT-TO-EDIT':
+      return {
+        ...state,
+        edit: action.payload
+      };
+
+    case 'ELEMENT-TO-DELETE':
+      return {
+        ...state,
+        delete: action.payload
+      };
+
+    default:
+      break;
   }
 
   return state;

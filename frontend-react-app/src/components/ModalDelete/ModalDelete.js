@@ -2,7 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
-const ModalDelete = ({ Offset, limit, setCountAllReception, ElementRecToModal, setReception, openModalDelete, Sort, Filter }) => {
+const ModalDelete = ({
+  Offset,
+  limit,
+  setCountAllReception,
+  ElementRecToModal,
+  setReception,
+  openModalDelete,
+  Sort,
+  Filter }) => {
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization } = user;
 

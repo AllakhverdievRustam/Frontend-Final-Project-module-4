@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
@@ -6,19 +6,23 @@ import Header from '../HeaderComponent/Header';
 import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyRegist.scss';
 
-const BodyRegist = ({ Error, Registration, setError, setRegPassInput, setRegPassRepeatInput, setRegLoginInput }) => {
+const BodyRegist = ({ Error, setError }) => {
+  const [loginInput, setLoginInput] = useState('');
+  const [passwordInput, setPasswordInput] = useState('');
+  const [passwordRepeatInput, setPasswordRepeatInput] = useState('');
+
   const history = useHistory();
 
   const registration = () => {
-    if (Registration.login.length < 6) return setError('Введите более 6 символов в поле логина!');
-    if (Registration.password.length < 6) return setError('Введите более 6 символов в поле пароля!');
+    if (loginInput.length < 6) return setError('Введите более 6 символов в поле логина!');
+    if (passwordInput.length < 6) return setError('Введите более 6 символов в поле пароля!');
 
-    if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(Registration.password)) {
-      if (Registration.password !== Registration.passwordRepeat) return setError('Пароли не совпадают!');
+    if (/((?=.*[0-9])(?=.*[a-zA-Z]))/.test(passwordInput)) {
+      if (passwordInput !== passwordRepeatInput) return setError('Пароли не совпадают!');
 
       axios.post('http://localhost:8000/registrationUser', {
-        login: Registration.login,
-        password: Registration.passwordRepeat
+        login: loginInput,
+        password: passwordRepeatInput
       }).then(res => {
         setError('');
         localStorage.setItem('user', JSON.stringify(res.data));
@@ -33,9 +37,9 @@ const BodyRegist = ({ Error, Registration, setError, setRegPassInput, setRegPass
 
   const onClickSwitch = () => {
     setError('');
-    setRegPassInput('');
-    setRegPassRepeatInput('');
-    setRegLoginInput('');
+    setLoginInput('');
+    setPasswordInput('');
+    setPasswordRepeatInput('');
   }
 
   return (
@@ -53,7 +57,7 @@ const BodyRegist = ({ Error, Registration, setError, setRegPassInput, setRegPass
           <div className="regist-form mb-3">
             <label className="mb-1">login:</label>
             <input
-              onChange={(e) => setRegLoginInput(e.target.value)}
+              onChange={(e) => setLoginInput(e.target.value)}
               type="text"
               placeholder="login"
               name="login"
@@ -62,7 +66,7 @@ const BodyRegist = ({ Error, Registration, setError, setRegPassInput, setRegPass
 
             <label className="mb-1">Password:</label>
             <input
-              onChange={(e) => setRegPassInput(e.target.value)}
+              onChange={(e) => setPasswordInput(e.target.value)}
               type="text"
               placeholder="Password"
               name="password"
@@ -71,7 +75,7 @@ const BodyRegist = ({ Error, Registration, setError, setRegPassInput, setRegPass
 
             <label className="mb-1">Repeat password:</label>
             <input
-              onChange={(e) => setRegPassRepeatInput(e.target.value)}
+              onChange={(e) => setPasswordRepeatInput(e.target.value)}
               type="text"
               placeholder="Password"
               name="password-repeat"
@@ -101,21 +105,11 @@ const BodyRegist = ({ Error, Registration, setError, setRegPassInput, setRegPass
 
 export default connect(
   state => ({
-    Error: state.Error,
-    Registration: state.Registration
+    Error: state.Error
   }),
   dispatch => ({
     setError: (value) => {
       dispatch({ type: 'ERROR', payload: value });
-    },
-    setRegPassInput: (value) => {
-      dispatch({ type: 'REG-PASS', payload: value });
-    },
-    setRegPassRepeatInput: (value) => {
-      dispatch({ type: 'REG-PASS-REPEAT', payload: value });
-    },
-    setRegLoginInput: (value) => {
-      dispatch({ type: 'REG-LOGIN', payload: value });
     }
   })
 )(BodyRegist);

@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import reducer from "./reducers"
+import reducer from "./reducers";
 import { createStore } from 'redux';
 import { BrowserRouter } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
@@ -11,10 +11,6 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 import './index.scss';
 
 const store = createStore(reducer);
-
-store.subscribe(() => {
-  console.log('subscribe:', store.getState());
-});
 
 ReactDOM.render(
   <BrowserRouter>
