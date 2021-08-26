@@ -10,7 +10,7 @@ const PersonalArea = () => {
   const user = JSON.parse(localStorage.getItem('user'));
   const { authorization, image } = user;
 
-  useEffect (() => {
+  useEffect(() => {
     if (image) {
       setUploadedImage({
         src: image,

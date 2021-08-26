@@ -27,23 +27,23 @@ const Header = ({ name, flagExit, flagArea }) => {
           </Link>
           {
             flagArea ?
-            <Link className='btn-area' to='/PersonalArea'>
-              <button
-                type="button"
-                className="btn btn-outline-dark"
-              >
-                Кабинет
-              </button>
-            </Link>
-            :
-            <Link className='btn-area' to='/MainPage'>
-              <button
-                type="button"
-                className="btn btn-outline-dark"
-              >
-                Назад
-              </button>
-            </Link>
+              <Link className='btn-area' to='/PersonalArea'>
+                <button
+                  type="button"
+                  className="btn btn-outline-dark"
+                >
+                  Кабинет
+                </button>
+              </Link>
+              :
+              <Link className='btn-area' to='/MainPage'>
+                <button
+                  type="button"
+                  className="btn btn-outline-dark"
+                >
+                  Назад
+                </button>
+              </Link>
           }
         </div>
       }

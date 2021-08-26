@@ -6,7 +6,7 @@ import Header from '../HeaderComponent/Header';
 import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyAuth.scss';
 
-const BodyAuth = ({ Error, setError, setUseEffectDo,setReception }) => {
+const BodyAuth = ({ Error, setError, setUseEffectDo, setReception }) => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
