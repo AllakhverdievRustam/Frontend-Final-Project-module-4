@@ -15,15 +15,15 @@
 
   img {
     width: 100%;
-    height: auto;
-    max-width: 320px;
-    max-height: 320px;
+    height: 100%;
+    max-width: 260px;
+    max-height: 260px;
     min-width: 100px;
-    min-height: 100px;
     margin: 40px 0;
     border-radius: 100%;
     user-select: none;
     pointer-events: none;
+    object-fit: cover;
   }
 
   .btn-block {
