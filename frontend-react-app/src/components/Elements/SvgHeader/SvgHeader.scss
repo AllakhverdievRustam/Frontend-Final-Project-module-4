@@ -1,9 +1,16 @@
 .svg-header {
   min-width: 59px;
   min-height: 42px;
+  margin: 0 40px;
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 550px) {
+  .svg-header {
+    margin: 0 0 0 40px;
+  }
+}
+
+@media screen and (max-width: 415px) {
   .svg-header {
     display: none;
   }

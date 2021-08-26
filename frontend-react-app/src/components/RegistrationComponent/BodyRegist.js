@@ -6,7 +6,7 @@ import Header from '../HeaderComponent/Header';
 import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyRegist.scss';
 
-const BodyRegist = ({ Error, setError }) => {
+const BodyRegist = ({ Error, setError, setUseEffectDo, setReception }) => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
   const [passwordRepeatInput, setPasswordRepeatInput] = useState('');
@@ -22,10 +22,13 @@ const BodyRegist = ({ Error, setError }) => {
 
       axios.post('http://localhost:8000/registrationUser', {
         login: loginInput,
-        password: passwordRepeatInput
-      }).then(res => {
+        password: passwordRepeatInput,
+        imgName: ''
+      }).then(async res => {
         setError('');
         localStorage.setItem('user', JSON.stringify(res.data));
+        setUseEffectDo(true);
+        await setReception([]);
         history.push('/MainPage');
       }).catch((err) => {
         if (err.response.status === 421) return setError('Пользователь уже существует в системе!');
@@ -44,7 +47,7 @@ const BodyRegist = ({ Error, setError }) => {
 
   return (
     <>
-      <Header name='Зарегистрироваться в системе' flag={false} />
+      <Header name='Зарегистрироваться в системе' flagExit={false} flagArea={false} />
       <div className="main-block-regist w-100">
 
         <Svg />
@@ -110,6 +113,12 @@ export default connect(
   dispatch => ({
     setError: (value) => {
       dispatch({ type: 'ERROR', payload: value });
+    },
+    setUseEffectDo: (value) => {
+      dispatch({ type: 'USE-EFF-DO', payload: value });
+    },
+    setReception: (value) => {
+      dispatch({ type: 'GET-RECEPTIONS', payload: value });
     }
   })
 )(BodyRegist);

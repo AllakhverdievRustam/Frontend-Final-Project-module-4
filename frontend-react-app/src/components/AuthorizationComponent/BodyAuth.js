@@ -6,7 +6,7 @@ import Header from '../HeaderComponent/Header';
 import Svg from '../Elements/SvgMain/SvgMain';
 import './BodyAuth.scss';
 
-const BodyAuth = ({ Error, setError }) => {
+const BodyAuth = ({ Error, setError, setUseEffectDo, setReception }) => {
   const [loginInput, setLoginInput] = useState('');
   const [passwordInput, setPasswordInput] = useState('');
 
@@ -20,9 +20,11 @@ const BodyAuth = ({ Error, setError }) => {
       axios.post('http://localhost:8000/authorizationUser', {
         login: loginInput,
         password: passwordInput
-      }).then(res => {
+      }).then(async res => {
         setError('');
         localStorage.setItem('user', JSON.stringify(res.data));
+        setUseEffectDo(true);
+        await setReception([]);
         history.push('/MainPage');
       }).catch((err) => {
         switch (err.response.status) {
@@ -48,7 +50,7 @@ const BodyAuth = ({ Error, setError }) => {
 
   return (
     <>
-      <Header name='Войти в систему' flag={false} />
+      <Header name='Войти в систему' flagExit={false} flagArea={false} />
       <div className="main-block-auth w-100">
 
         <Svg />
@@ -105,6 +107,12 @@ export default connect(
   dispatch => ({
     setError: (value) => {
       dispatch({ type: 'ERROR', payload: value });
+    },
+    setUseEffectDo: (value) => {
+      dispatch({ type: 'USE-EFF-DO', payload: value });
+    },
+    setReception: (value) => {
+      dispatch({ type: 'GET-RECEPTIONS', payload: value });
     }
   })
 )(BodyAuth);

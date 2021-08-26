@@ -33,10 +33,10 @@ const MainPage = ({
 
   const limit = 5;
 
-  const user = JSON.parse(localStorage.getItem('user'));
-  const { authorization } = user;
-
   useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const { authorization } = user;
+
     if (UseEffectDo) {
       axios.post('http://localhost:8000/getAllReceptions',
         {
@@ -63,7 +63,6 @@ const MainPage = ({
     direction,
     firstDate,
     lastDate,
-    authorization,
     setCountAllReception,
     setUseEffectDo,
     setReception]);
@@ -80,11 +79,9 @@ const MainPage = ({
 
   return (
     <div>
-      <Header name='Приемы' flag={true} />
+      <Header name='Приемы' flagExit={true} flagArea={true} />
 
-      <AddBlock
-        limit={limit}
-      />
+      <AddBlock limit={limit} />
 
       <div className="block-main w-100">
         <SortBlock />
@@ -134,23 +131,17 @@ const MainPage = ({
           </tbody>
         </table>
 
-        <Pagination
-          limit={limit}
-        />
+        <Pagination limit={limit} />
       </div>
 
       {
         OpenModal.modalDelete &&
-        <ModalDelete
-          limit={limit}
-        />
+        <ModalDelete limit={limit} />
       }
 
       {
         OpenModal.modalEdit &&
-        <ModalEdit
-          limit={limit}
-        />
+        <ModalEdit limit={limit} />
       }
     </div>
   );
