@@ -20,36 +20,65 @@
   font-weight: 300;
   font-style: normal;
   line-height: 42px;
+  margin: 24px;
 }
 
-.button-header {
+.header-btn-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  width: auto;
+  height: auto;
   margin-left: auto;
   margin-right: 40px;
+}
+
+.btn-area {
+  margin-left: 20px;
 }
 
 @media screen and (max-width: 865px) {
   .header-lable {
     font-size: 30px;
-    text-align: center;
   }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
   .header-lable {
     font-size: 25px;
-    text-align: center;
   }
 }
 
 @media screen and (max-width: 440px) {
   .header-lable {
     font-size: 20px;
-    text-align: center;
+  }
+
+  .header {
+    justify-content: center;
   }
 }
 
-@media screen and (max-width: 390px) {
+@media screen and (max-width: 415px) {
+  .header-lable {
+    margin: 24px 10px 24px 40px;
+  }
+}
+
+@media screen and (max-width: 400px) {
   .header {
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 20vh;
+  }
+
+  .header-lable {
+    margin: 15px;
+  }
+
+  .header-btn-block {
+    margin: 0;
   }
 }

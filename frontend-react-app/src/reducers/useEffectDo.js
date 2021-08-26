@@ -1,4 +1,5 @@
-const UseEffectDo = (state = true, action) => {
+const initialState = true;
+const UseEffectDo = (state = initialState, action) => {
   if (action.type === 'USE-EFF-DO') {
     return action.payload;
   }
